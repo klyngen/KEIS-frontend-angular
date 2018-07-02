@@ -6,6 +6,7 @@ import { EquipmentComponent } from './equipment/equipment.component';
 import { RentComponent } from './rent/rent.component';
 
 const routes: Routes = [
+    {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     {path: 'dashboard', component: DashboardComponent, data: {title: 'Dashboard', subtitle: 'Keis Equipment Indexing System', icon: 'tachometer'}},
     {path: 'users', component: UsersComponent, data: {title: 'Users', subtitle: 'User management', icon: 'users'}},
     {path: 'equipment', component: EquipmentComponent, data: {title: 'Equipment', subtitle: 'Equipment management', icon: 'wrench'}},

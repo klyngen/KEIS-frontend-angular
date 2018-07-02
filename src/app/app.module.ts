@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
-
+import {HttpClientModule} from '@angular/common/http';
+import {DataTablesModule} from 'angular-datatables';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RentComponent } from './rent/rent.component';
@@ -28,7 +29,9 @@ import { DynamicTableComponent } from './dynamic-table/dynamic-table.component';
   imports: [
     BrowserModule,
       AppRoutingModule,
-      AngularFontAwesomeModule
+      AngularFontAwesomeModule,
+      HttpClientModule,
+      DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

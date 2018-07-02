@@ -12,9 +12,6 @@ export class NavigationComponent implements OnInit {
                 private route: ActivatedRoute) { }
 
   ngOnInit() {
-      this.router.config.forEach(item => {
-          console.log(item);
-      });
   }
 
 }

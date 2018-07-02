@@ -2,8 +2,11 @@
     <a class="navbar-brand" href="/"><b>K</b>EIS <b>E</b>quipment <b>I</b>ndexing <b>S</b>ystem</a>
     <div class="navbar-expand mr-auto">
         <div class="navbar-nav">
-            <ng-container *ngIf="router.config.data"></ng-container>
-            <a class="nav-item nav-link" *ngFor="let item of router.config"  routerLinkActive="active" routerLink="/{{item.path}}"> <fa name="{{item.data.icon}}"></fa> {{item.data.title}}</a>
+            <ng-container *ngFor="let item of router.config">
+                <ng-container *ngIf="item.data">
+                    <a class="nav-item nav-link"  routerLinkActive="active" routerLink="/{{item.path}}"> <fa name="{{item.data.icon}}"></fa> {{item.data.title}}</a>
+                </ng-container>
+            </ng-container>
         </div>
     </div>
     <div class="navbar-expand ml-auto navbar-nav">
