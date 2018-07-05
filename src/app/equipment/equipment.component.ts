@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiClientService } from '../api-client.service';
 import { HttpClient } from '@angular/common/http';
 import { Equipment } from '../httpClient/equipment';
+import {KeisAPIService} from '../keis-api.service';
 
 @Component({
   selector: 'equipment',
@@ -10,12 +11,9 @@ import { Equipment } from '../httpClient/equipment';
 })
 export class EquipmentComponent implements OnInit {
 
-    constructor(/*private keisClient: ApiClientService*/ private httpClient: HttpClient) { }
+    constructor(/*private keisClient: ApiClientService*/ private httpClient: KeisAPIService) { }
 
   ngOnInit() {
-      //this.keisClient.getAllEquipment();
-      this.httpClient.get<Equipment[]>("http://localhost:8000/api/equipment").subscribe(data => {
-          console.log(data);
-      });
+      console.log(this.httpClient.getAllEquipment());
   }
 }

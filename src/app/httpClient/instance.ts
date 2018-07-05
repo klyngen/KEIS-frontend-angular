@@ -1,6 +1,6 @@
 import {TimeStamp} from './time-stamp';
 
-export class Instance {
+export interface Instance {
     id: number;
     condition: number;
     equipment: number;

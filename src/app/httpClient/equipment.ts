@@ -2,7 +2,7 @@
 import {Instance} from './instance';
 import {TimeStamp} from './time-stamp';
 
-export class Equipment {
+export interface Equipment {
     id: number;
     timeStamp: TimeStamp;
     model: number;
