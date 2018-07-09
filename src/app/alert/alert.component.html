@@ -1,5 +1,5 @@
-<div ngbDropdowm class="alerts">
-    <a ngbDropdownToggle (click)="readMessages()" class="navbar-" href="">Messages
+<div ngbDropdown class="alerts">
+    <a ngbDropdownToggle (click)="readMessages()" class="navbar-" >Messages
         <ng-container *ngIf="newMessages">
             <span class="badge badge-light unread">{{alerts.length}}</span>
         </ng-container>
@@ -9,16 +9,16 @@
         </ng-container>
     </a>
 
-    <div class="dropdown-item alert-item">
+    <div ngbDropdownMenu class="dropdown-item alert-item">
 
-        <button *ngFor="let item of alerts let i = index" class="dropdown-item">Something
+        <a href="{{item.createIssueUrl(issueUrl)}}" *ngFor="let item of alerts let i = index" class="dropdown-item">Something
 
             <span class="badge badge-{{item.classType}}">{{item.classType}}</span>{{item.title}}
             <span class="cross-out"><fa name="times"></fa></span>
 
-        </button>
+        </a>
 
-        <ng-container *ngIf="alerts">
+        <ng-container *ngIf="alerts.length">
             <button (click)="eraseAlerts()" class="dropdown-item">Clear alerts <fa name="eraser"></fa></button>
         </ng-container>
     </div>

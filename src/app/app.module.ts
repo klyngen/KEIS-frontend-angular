@@ -19,14 +19,15 @@ import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavigationComponent,
-    DashboardComponent,
-    RentComponent,
-    EquipmentComponent,
-    UsersComponent,
-    FooterComponent,
-      DynamicTableComponent
+      AppComponent,
+      NavigationComponent,
+      DashboardComponent,
+      RentComponent,
+      EquipmentComponent,
+      UsersComponent,
+      FooterComponent,
+      DynamicTableComponent,
+      AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +35,6 @@ import { AlertComponent } from './alert/alert.component';
       AngularFontAwesomeModule,
       HttpClientModule,
       DataTablesModule,
-      AlertComponent,
       NgbModule.forRoot()
   ],
   providers: [],
