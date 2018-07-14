@@ -13,7 +13,7 @@ const httpOptions = {
 @Injectable()
 export class ApiClientService {
     // All listeners
-    subjects: Subject<any>[] = [];
+    subject: Subject<any> = new Subject<any>();
 
     // TODO put this in some configuration file
     baseUrl = 'http://localhost:8000/api';
@@ -22,16 +22,20 @@ export class ApiClientService {
 
     }
 
+    getObserver() {
+        return this.subject.asObservable();
+    }
+
     /**
      *  Notifies all the subscribers
      */
     notifySubjects(data: any, correlationId: string) {
-        this.subjects.forEach(item => {
+        this.subject.forEach(item => {
             item.next(data);
         });
     }
 
-    getAllEquipment(correlationId: string) {
+    getAllEquipment() {
         const snowflake = this.snowflake();
         this.httpClient.get(this.baseUrl + '/equipment').subscribe(data => {
             this.notifySubjects(data, snowflake);

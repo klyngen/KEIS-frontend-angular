@@ -3,7 +3,6 @@ import { Alert } from '../Models/alert';
 import {AlertServiceService} from '../alert-service.service';
 
 // Issues base url
-const issueUrl = 'https://github.com/klyngen/KEIS/issues/new';
 
 @Component({
   selector: '[alert]',
@@ -11,6 +10,7 @@ const issueUrl = 'https://github.com/klyngen/KEIS/issues/new';
   styleUrls: ['./alert.component.css']
 })
 export class AlertComponent implements OnInit {
+    issueUrl = 'https://github.com/klyngen/KEIS/issues/new';
     alerts: Alert[] = [];
     newMessages: '';
     constructor(private alertService: AlertServiceService) {
@@ -43,8 +43,8 @@ export class AlertComponent implements OnInit {
             this.alerts.splice(index, 1);
         } catch (e) {
             // Should this be its own alert :o?
-            this.alertService.addAlert(new Alert("danger", "Message error", "An error ocurred when trying to erase messages. Following exception" + e));
+            this.alertService.addAlert(new Alert('danger', 'Message error', 'An error ocurred when trying to erase messages. Following exception' + e));
         }
-    } 
+    }
 
 }

@@ -11,9 +11,18 @@ import {KeisAPIService} from '../keis-api.service';
 })
 export class EquipmentComponent implements OnInit {
 
-    constructor(/*private keisClient: ApiClientService*/ private httpClient: KeisAPIService) { }
+    equipment: Equipment[] = [];
+    constructor(private httpClient: KeisAPIService) {
+    }
 
   ngOnInit() {
-      console.log(this.httpClient.getAllEquipment());
+      const snowflake = this.httpClient.snowflake();
+      this.httpClient.getObserver().subscribe(data => {
+          if (data.correlationId = snowflake) {
+              this.equipment = data.data;
+              console.log(data);
+          }
+      });
+      this.httpClient.getAllEquipment(snowflake);
   }
 }
