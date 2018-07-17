@@ -1,38 +1,20 @@
 
-import {Instance} from './instance';
-import {TimeStamp} from './time-stamp';
-import { Timestamp } from 'rxjs';
-import { ITableElement } from '../itable-element';
+import { JsonElement } from './json-element';
+import {TableElement} from './table-element';
 
-export interface IEquipment {
-    id: number;
-    timeStamp: TimeStamp;
-    model: number;
-    Description: string;
-    brands: string;
-    types: string;
-    instances: Instance[];
-    available: number;
-    total: number;
-    rented: number;
-    updated_at: string;
-    created_at: string;
-}
+export class Equipment extends TableElement {
+  blackList: string[] = [
+    'created_at',
+    'updated_at',
+    'id'
+  ];
 
-export class Equipment implements ITableElement {
-    equipment: IEquipment;
+  nameMapping: {[key: string]: string} = {};
 
-    constructor(equipment: IEquipment) {
-        this.equipment = equipment;
-    }
-
-    createHeader(): string[] {
-        return [''];
-    }
-
-    createDataRow(): any[] {
-        return ['']
-    }
-
-
+  constructor (data: JsonElement[]) {
+    super(data);
+    this.nameMapping['brands'] = 'Brand';
+    this.nameMapping['types'] = 'Type';
+    this.nameMapping['model'] = 'Model';
+  }
 }

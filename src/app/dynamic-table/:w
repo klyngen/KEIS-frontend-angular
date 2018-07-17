@@ -1,4 +1,4 @@
-<!-- <table datatable class="table table-striped">
+<!--<table datatable class="table table-striped">
     <thead>
         <tr>
             <th *ngFor="let item of _header">{{item}}</th>
@@ -12,15 +12,20 @@
 </table>
 -->
 
-<table class="table table-striped" datatable [dtTrigger]="dtTrigger">
+<table datatable>
   <thead>
     <tr>
       <th *ngFor="let item of _header">{{item}}</th>
+      <th>1</th>
+      <th>1</th>
+      <th>1</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of _data">
-      <td *ngFor="let subitem of item.createDataRow(_header)">{{subitem}}</td>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>

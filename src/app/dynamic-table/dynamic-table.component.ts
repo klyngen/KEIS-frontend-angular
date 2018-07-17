@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ITableElement } from '../itable-element';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'dynamic-table',
@@ -9,18 +11,19 @@ export class DynamicTableComponent implements OnInit {
     _data: Object[] = [];
     _header: string[] = [];
 
+  dtTrigger: Subject<any> = new Subject();
+
+
     @Input()
-    set data(data) {
+  set data(data: ITableElement[]) {
         this._data = data;
-        this.makeHeader();
+      if (data.length > 0) {
+        this._header = data[0].createHeader();
+      }
+    console.log(this._header);
+    this.dtTrigger.next();
     }
 
-    makeHeader() {
-        this._header = [];
-        for (const key in this._data[0]) {
-            this._header.push(key);
-        }
-    }
 
   constructor() { }
 

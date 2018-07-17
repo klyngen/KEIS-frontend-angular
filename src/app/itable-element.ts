@@ -1,4 +1,9 @@
+import { JsonElement } from "./httpClient/json-element";
+
 export interface ITableElement {
-    createHeader(): string[];
-    createDataRow(): any[];
+  data: JsonElement[];
+  blackList: string[];
+  nameMapping: {[key: string]: string};
+  createHeader: () => string[];
+  createDataRow: (header: string[]) => any[];
 }

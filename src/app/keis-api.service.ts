@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Equipment, IEquipment } from './httpClient/equipment';
+import { Equipment } from './httpClient/equipment';
 import { AlertServiceService } from './alert-service.service';
 import {map} from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { Alert } from './Models/alert';
+import { JsonElement } from './httpClient/json-element';
 
 const baseUrl = 'http://localhost:8000/api';
 
@@ -45,18 +46,14 @@ export class KeisAPIService {
         this.subject.next({data, correlationId});
     }
 
-    
+
 
     getAllEquipment(snowflake: string) {
-        this.httpClient.get(baseUrl + '/equipment').pipe(map().subscribe(data => {
-            if (Array.isArray(data)) {
-                data.forEach(item => {
-
-                });
-            }
+      this.httpClient.get(baseUrl + '/equipment').pipe(map(item => JsonElement.object2Equipment(item))).subscribe(data => {
             this.notifySubjects(data, snowflake);
         }, error => {
-            this.alertService.addAlert(new Alert('warning', 'unable to fetch equipment', 'might be cauced by bad configuration ' + error.error.message));
+          console.log(error);
+            this.alertService.addAlert(new Alert('warning', 'unable to fetch equipment', 'might be cauced by bad configuration ' + error.message));
         });
     }
 

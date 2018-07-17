@@ -1,24 +1,22 @@
 
 <div ngbDropdown>
-    <a ngbDropdownToggle class="nav-item nav-link">Toggle
-        <ng-container *ngIf="newMessages">
-            <span class="badge badge-light unread">{{alerts.length}}</span>
-        </ng-container>
+  <a ngbDropdownToggle class="nav-item nav-link">Toggle
+    <ng-container *ngIf="newMessages">
+      <span class="badge badge-light unread">{{alerts.length}}</span>
+    </ng-container>
 
-        <ng-container *ngIf="!newMessages">
-            <span class="badge badge-primary read">{{alerts.length}}</span>
-        </ng-container>
+    <ng-container *ngIf="!newMessages">
+      <span class="badge badge-primary read">{{alerts.length}}</span>
+    </ng-container>
+  </a>
+  <div ngbDropdownMenu>
+    <a href="{{item.createIssueUrl(issueUrl)}}" *ngFor="let item of alerts let i = index" class="dropdown-item">
+
+      <span class="badge badge-{{item.classType}}">{{item.classType}}</span>{{item.title}}
+      <span class="cross-out"><fa name="times"></fa></span>
+
     </a>
-    <div ngbDropdownMenu>
-        <a href="{{item.createIssueUrl(issueUrl)}}" *ngFor="let item of alerts let i = index" class="dropdown-item">Something
-
-            <span class="badge badge-{{item.classType}}">{{item.classType}}</span>{{item.title}}
-            <span class="cross-out"><fa name="times"></fa></span>
-
-        </a>
-
-        <ng-container *ngIf="alerts.length">
-            <button (click)="eraseAlerts()" class="dropdown-item">Clear alerts <fa name="eraser"></fa></button>
-        </ng-container>
-    </div>
+    <div class="dropdown-divider"></div>
+    <button (click)="eraseAlerts()" class="dropdown-item">Clear alerts <fa name="eraser"></fa></button>
+  </div>
 </div>

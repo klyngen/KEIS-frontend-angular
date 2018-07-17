@@ -24,9 +24,9 @@
             ],
             "styles": [
                 "src/styles.scss",
+              "node_modules/datatables.net-dt/css/jquery.dataTables.css",
 	              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-                "node_modules/font-awesome/css/font-awesome.css",
-                "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+                "node_modules/font-awesome/css/font-awesome.css"
             ],
               "scripts": [
                   "node_modules/jquery/dist/jquery.js",
@@ -41,7 +41,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-                "optimization": true, 
+                "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,

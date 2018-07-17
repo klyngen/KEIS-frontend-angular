@@ -14,9 +14,6 @@ export class AlertComponent implements OnInit {
     alerts: Alert[] = [];
     newMessages: '';
     constructor(private alertService: AlertServiceService) {
-        for (let i = 0; i < 10; i++) {
-            this.alerts.push(new Alert('info', 'HEI', 'melding til klingen'));
-        }
     }
 
     ngOnInit() {
