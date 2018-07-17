@@ -15,6 +15,8 @@ export interface IEquipment {
     available: number;
     total: number;
     rented: number;
+    updated_at: string;
+    created_at: string;
 }
 
 export class Equipment implements ITableElement {
@@ -25,11 +27,11 @@ export class Equipment implements ITableElement {
     }
 
     createHeader(): string[] {
-        
+        return [''];
     }
 
     createDataRow(): any[] {
-        
+        return ['']
     }
 
 

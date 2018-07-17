@@ -1,5 +1,6 @@
-<div ngbDropdown class="alerts">
-    <a ngbDropdownToggle (click)="readMessages()" class="navbar-" >Messages
+
+<div ngbDropdown>
+    <a ngbDropdownToggle class="nav-item nav-link">Toggle
         <ng-container *ngIf="newMessages">
             <span class="badge badge-light unread">{{alerts.length}}</span>
         </ng-container>
@@ -8,9 +9,7 @@
             <span class="badge badge-primary read">{{alerts.length}}</span>
         </ng-container>
     </a>
-
-    <div ngbDropdownMenu class="dropdown-item alert-item">
-
+    <div ngbDropdownMenu>
         <a href="{{item.createIssueUrl(issueUrl)}}" *ngFor="let item of alerts let i = index" class="dropdown-item">Something
 
             <span class="badge badge-{{item.classType}}">{{item.classType}}</span>{{item.title}}

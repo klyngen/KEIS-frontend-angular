@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Equipment, IEquipment } from './httpClient/equipment';
 import { AlertServiceService } from './alert-service.service';
-import {map} from 'rxjs/add/operators';
+import {map} from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { Alert } from './Models/alert';
 
@@ -17,7 +17,9 @@ const headers = new HttpHeaders().set('Content-Type', 'application/json');
 export class KeisAPIService {
     subject: Subject<any> = new Subject<any>();
 
-    constructor(private httpClient: HttpClient, private alertService: AlertServiceService) {}
+    constructor(private httpClient: HttpClient, private alertService: AlertServiceService) {
+
+    }
 
 
     // Combines the baseUrl with an uri
@@ -43,14 +45,13 @@ export class KeisAPIService {
         this.subject.next({data, correlationId});
     }
 
+    
 
     getAllEquipment(snowflake: string) {
-        this.httpClient.get(baseUrl + '/equipment').map().subscribe(data => {
+        this.httpClient.get(baseUrl + '/equipment').pipe(map().subscribe(data => {
             if (Array.isArray(data)) {
                 data.forEach(item => {
-                    console.log(item);
-                    //const equipment: IEquipment = <IEquipment> item.json();
-                    //console.log(equipment);
+
                 });
             }
             this.notifySubjects(data, snowflake);
