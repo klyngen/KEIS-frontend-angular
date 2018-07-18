@@ -9,7 +9,7 @@ import { KeisAPIService } from '../../keis-api.service';
 })
 export class EditEquipmentComponent implements OnInit {
 
-    loaded = true;
+    loaded = false;
     _data: Equipment;
     _brand: string;
     _type: string;
@@ -23,7 +23,15 @@ export class EditEquipmentComponent implements OnInit {
 
     @Input()
     set data(data) {
-        this._data = data;
+        console.log(data);
+        if (data !== null) {
+            this._data = data;
+            this.loaded = true;
+        }
+    }
+
+    @Input()
+    set newEquipment(data) {
         this.loaded = true;
     }
 
@@ -34,12 +42,10 @@ export class EditEquipmentComponent implements OnInit {
         this.apiService.getObserver().subscribe(data => {
             if (data.correlationId === this.brandFlake) {
                 this._brandAlternatives = data.data;
-                console.log(data);
             }
 
             if (data.correlationId === this.typeFlake) {
                 this._typeAlternatives = data.data;
-                console.log(data);
             }
         });
 

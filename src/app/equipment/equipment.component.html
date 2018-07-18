@@ -11,12 +11,12 @@
         <!-- Table column -->
         <div class="col-md-8">
 
-            <dynamic-table [data]="equipment"></dynamic-table>
+            <dynamic-table (clicked)="rowClicked($event)" [data]="equipment"></dynamic-table>
         </div>
 
         <!-- Info column -->
         <div class="col-md-4">
-          <edit-equipment></edit-equipment>
+          <edit-equipment [data]="selected"></edit-equipment>
         </div>
     </div>
 </div>

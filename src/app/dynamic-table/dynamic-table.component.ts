@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ITableElement } from '../itable-element';
 import { Subject } from 'rxjs';
 
@@ -8,10 +8,11 @@ import { Subject } from 'rxjs';
   styleUrls: ['./dynamic-table.component.css']
 })
 export class DynamicTableComponent implements OnInit {
-    _data: Object[] = [];
+    _data: ITableElement[] = [];
     _header: string[] = [];
 
   dtTrigger: Subject<any> = new Subject();
+    dtOptions: DataTables.Settings = {};
 
 
     @Input()
@@ -20,13 +21,23 @@ export class DynamicTableComponent implements OnInit {
       if (data.length > 0) {
         this._header = data[0].createHeader();
       }
-    console.log(this._header);
     this.dtTrigger.next();
     }
+
+    @Output() clicked = new EventEmitter<ITableElement>();
 
 
   constructor() { }
 
   ngOnInit() {
+      this.dtOptions = {
+          rowCallback: (row: Node, data: any[] | Object, index: number) => {
+              $('td', row).unbind('click');
+              $('td', row).bind('click', () => {
+                  this.clicked.emit(this._data[index]);
+              });
+          }
+      };
   }
+
 }

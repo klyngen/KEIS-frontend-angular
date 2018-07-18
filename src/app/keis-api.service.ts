@@ -81,10 +81,8 @@ export class KeisAPIService {
         this.httpClient.get(baseUrl + uri).subscribe(data => {
             if (!this.handleServerErrors(data)) {
                 const elements: string[] = [];
-                console.log(data);
                 if (Array.isArray(data['data'])) {
                     data['data'].forEach(item => {
-                        console.log(item);
                         elements.push(item['name']);
                     });
 
