@@ -1,4 +1,4 @@
-<ng-container *ngIf="_data.length">
+<ng-container *ngIf="!_data.length">
     <h3>No data. Check messages or add equipment</h3>
 </ng-container>
 <table class="table table-striped" [dtOptions]="dtOptions" datatable [dtTrigger]="dtTrigger">

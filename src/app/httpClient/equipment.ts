@@ -1,5 +1,4 @@
 
-import { JsonElement } from './json-element';
 import {TableElement} from './table-element';
 
 export class Equipment extends TableElement {
@@ -11,7 +10,7 @@ export class Equipment extends TableElement {
 
   nameMapping: {[key: string]: string} = {};
 
-  constructor (data: JsonElement[]) {
+  constructor (data) {
     super(data);
     this.nameMapping['brands'] = 'Brand';
     this.nameMapping['types'] = 'Type';

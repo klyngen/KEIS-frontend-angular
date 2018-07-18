@@ -88,14 +88,16 @@ export class TableElement implements ITableElement {
         });
     }
 
-    getValue(key: string) {
+    getValue(key: string): any {
         const resKey = this.fetchKey(key);
-
+        let res = null;
         this.data.forEach(item => {
             if (item.key === resKey) {
-                return item.value;
+                res = item.value;
+                return;
             }
         });
+        return res;
     }
 
 }

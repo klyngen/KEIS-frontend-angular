@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { Alert } from './Models/alert';
 import { JsonElement } from './httpClient/json-element';
+import { Utils } from './httpClient/utils';
 
 const baseUrl = 'http://localhost:8000/api';
 
@@ -63,7 +64,7 @@ export class KeisAPIService {
     getAllEquipment(snowflake: string) {
         this.httpClient.get(baseUrl + '/equipment').pipe(map(item => {
             if (!this.handleServerErrors(item)) {
-                return JsonElement.object2Equipment(item['data']);
+                return <Equipment[]> Utils.object2Equipment(item['data']);
             }
             return null;
         })).subscribe(data => {
