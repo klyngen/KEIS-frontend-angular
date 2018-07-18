@@ -1,17 +1,6 @@
-<!-- <table datatable class="table table-striped">
-    <thead>
-        <tr>
-            <th *ngFor="let item of _header">{{item}}</th>
-        </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of _data">
-        <td *ngFor="let subitem of item.createDataRow(_header)">{{subitem}}</td>
-      </tr>
-    </tbody>
-</table>
--->
-
+<ng-container *ngIf="_data.length">
+    <h3>No data. Check messages or add equipment</h3>
+</ng-container>
 <table class="table table-striped" datatable [dtTrigger]="dtTrigger">
   <thead>
     <tr>

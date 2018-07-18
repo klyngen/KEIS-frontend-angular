@@ -1,0 +1,37 @@
+<div class="edit-equipment">
+
+  <ng-container *ngIf="!loaded">
+    <p class="lead">
+      <fa name="mouse-pointer"></fa> Click on an element in the table to edit the equipment
+    </p>
+  </ng-container>
+
+  <ng-container *ngIf="loaded">
+
+  </ng-container>
+  <div class="blurrable" [ngClass]="{'unloaded': !loaded}">
+    <div class="form-group">
+      <label for="">Model</label>
+      <input class="form-control" name="" type="text" value="" placeholder="Model..." />
+    </div>
+
+    <div class="form-group">
+      <drop-down-input [alternatives]="_brandAlternatives" [(value)]="_brand" placeholder="Brand..." label="Brand"></drop-down-input>
+    </div>
+
+    <div class="form-group">
+      <drop-down-input [alternatives]="_typeAlternatives" [(value)]="_type" label="Type" placeholder="Type..."></drop-down-input>
+    </div>
+
+    <div class="form-group">
+      <label for="">Description</label>
+      <textarea class="form-control" id="" name="" rows="3">
+      </textarea>
+    </div>
+
+    <div class="btn-group">
+      <button (click)="concept()" class="btn btn-success">Save</button>
+    </div>
+
+  </div>
+</div>

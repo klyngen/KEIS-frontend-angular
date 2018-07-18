@@ -16,6 +16,8 @@ import { UsersComponent } from './users/users.component';
 import { FooterComponent } from './footer/footer.component';
 import { DynamicTableComponent } from './dynamic-table/dynamic-table.component';
 import { AlertComponent } from './alert/alert.component';
+import { EditEquipmentComponent } from './equipment/edit-equipment/edit-equipment.component';
+import { DropDownInputComponent } from './small/drop-down-input/drop-down-input.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { AlertComponent } from './alert/alert.component';
       UsersComponent,
       FooterComponent,
       DynamicTableComponent,
-      AlertComponent
+      AlertComponent,
+      EditEquipmentComponent,
+      DropDownInputComponent
   ],
   imports: [
     BrowserModule,

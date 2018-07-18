@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
 
+  toggleNavbar = false;
     constructor(private router: Router,
                 private route: ActivatedRoute) { }
 

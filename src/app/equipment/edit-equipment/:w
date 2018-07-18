@@ -1,0 +1,33 @@
+import { Component, OnInit, Output, Input } from '@angular/core';
+import { Equipment } from '../../httpClient/equipment';
+
+@Component({
+  selector: 'edit-equipment',
+  templateUrl: './edit-equipment.component.html',
+  styleUrls: ['./edit-equipment.component.css']
+})
+export class EditEquipmentComponent implements OnInit {
+
+  loaded = true;
+  _data: Equipment;
+    _brand: string;
+    _type: string;
+    _description: string;
+    _model: string;
+
+  @Input()
+  set data(data) {
+    this._data = data;
+    this.loaded = true;
+  }
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+    concept() {
+        console.log("yay");
+    }
+
+}

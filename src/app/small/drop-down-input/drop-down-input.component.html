@@ -1,0 +1,16 @@
+
+<label >{{_label}}</label>
+<div class="input-group">
+  <input value="{{_value}}" placeholder="{{_placeholder}}" (change)="valueChanged($event)" class="form-control" name="" type="text" />
+  <div ngbDropdown>
+    <button ngbDropdownToggle class="form-control btn btn-outline-primary">{{_label}}</button>
+    <div ngbDropdownMenu>
+        <ng-container *ngFor="let item of _alternatives">
+            <button (click)="select(item)" class="dropdown-item">{{item}}</button>
+        </ng-container>
+      <ng-container *ngIf="!_alternatives.length">
+          <button disabled class="dropdown-item">No alternatives</button>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -46,14 +46,54 @@ export class KeisAPIService {
         this.subject.next({data, correlationId});
     }
 
+    /**
+       * Returns true if there is an error present
+       *
+       */
+    private handleServerErrors(data: Object): boolean {
+        if (data['error'] !== undefined) {
+            this.alertService.addAlert(
+                new Alert('danger', 'server side error', data['error']));
+            return true;
+        }
+        return false;
+    }
 
 
     getAllEquipment(snowflake: string) {
-      this.httpClient.get(baseUrl + '/equipment').pipe(map(item => JsonElement.object2Equipment(item))).subscribe(data => {
-            this.notifySubjects(data, snowflake);
+        this.httpClient.get(baseUrl + '/equipment').pipe(map(item => {
+            if (!this.handleServerErrors(item)) {
+                return JsonElement.object2Equipment(item['data']);
+            }
+            return null;
+        })).subscribe(data => {
+            if (data !== null) {
+                this.notifySubjects(data, snowflake);
+            }
         }, error => {
-          console.log(error);
-            this.alertService.addAlert(new Alert('warning', 'unable to fetch equipment', 'might be cauced by bad configuration ' + error.message));
+            this.alertService.addAlert(
+                new Alert('warning', 'unable to fetch equipment', 'might be cauced by bad configuration ' + error.message));
+        });
+    }
+
+
+    getBrandsAndTypes(snowflake: string, uri: string) {
+        this.httpClient.get(baseUrl + uri).subscribe(data => {
+            if (!this.handleServerErrors(data)) {
+                const elements: string[] = [];
+                console.log(data);
+                if (Array.isArray(data['data'])) {
+                    data['data'].forEach(item => {
+                        console.log(item);
+                        elements.push(item['name']);
+                    });
+
+                    this.notifySubjects(elements, snowflake);
+                }
+            }
+        }, error => {
+            this.alertService.addAlert(
+                new Alert('warning', 'unable to fetch brand data', 'this is a client side implementation issue'));
         });
     }
 
