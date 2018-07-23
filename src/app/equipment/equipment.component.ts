@@ -13,6 +13,7 @@ export class EquipmentComponent implements OnInit {
 
     equipment: Equipment[] = [];
     selected: Equipment = null;
+    _new = false;
     constructor(private httpClient: KeisAPIService) {
     }
 
@@ -27,5 +28,9 @@ export class EquipmentComponent implements OnInit {
   }
     rowClicked(equipment: Equipment) {
         this.selected = equipment;
+    }
+
+    newEquipment() {
+        this._new = true;
     }
 }

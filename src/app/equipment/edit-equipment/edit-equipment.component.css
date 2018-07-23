@@ -7,13 +7,10 @@
   background-color: #ccc;
 }
 
-.unloaded:before {
-  content: "Ajsdkfjksdf kj";
+.edit-equipment {
+  border-left-style: solid;
+  padding: 25px;
+  border-left-width: 2px;
+  border-color: rgba(0, 0, 0, 0.6);
 }
 
-.edit-equipment {
-  border-style: solid;
-  border-radius: 10px;
-  padding: 15px;
-  border-width: 2px;
-}

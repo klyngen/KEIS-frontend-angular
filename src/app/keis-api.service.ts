@@ -7,6 +7,7 @@ import { Subject, Observable } from 'rxjs';
 import { Alert } from './Models/alert';
 import { JsonElement } from './httpClient/json-element';
 import { Utils } from './httpClient/utils';
+import { TableElement } from './httpClient/table-element';
 
 const baseUrl = 'http://localhost:8000/api';
 
@@ -74,6 +75,23 @@ export class KeisAPIService {
         }, error => {
             this.alertService.addAlert(
                 new Alert('warning', 'unable to fetch equipment', 'might be cauced by bad configuration ' + error.message));
+        });
+    }
+
+/**
+ *  Post data to an API. This function is private while this is the raw implementation
+ */
+    private postData(snowflake: string, uri: string, data) {
+        this.httpClient.post(baseUrl + 'uri', data).pipe(map(item => {
+            if (!this.handleServerErrors(item)) {
+               // Make a happy alert?
+                return Utils.object2TableElement(item);
+            }
+            return null;
+        })).subscribe(success => {
+            this.notifySubjects(success, snowflake);
+        }, error => {
+            this.alertService.addAlert(new Alert('danger', 'unable to post data to ' + baseUrl + uri, 'the keis backend might not be running'));
         });
     }
 

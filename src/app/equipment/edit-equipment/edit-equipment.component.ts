@@ -15,6 +15,8 @@ export class EditEquipmentComponent implements OnInit {
     _type: string;
     _description: string;
     _model: string;
+    _new = false;
+
     brandFlake: string;
     typeFlake: string;
 
@@ -32,7 +34,11 @@ export class EditEquipmentComponent implements OnInit {
 
     @Input()
     set newEquipment(data) {
-        this.loaded = true;
+        if (data) {
+            this.reset();
+            this.loaded = true;
+            this._new = true;
+        }
     }
 
     private parseEquipment() {
@@ -40,6 +46,16 @@ export class EditEquipmentComponent implements OnInit {
         this._type =  this._data.getValue('Type');
         this._model = this._data.getValue('Model');
         this._description = this._data.getValue('Description');
+    }
+
+    private reset() {
+        this._description = '';
+        this._model = '';
+        this._brand = '';
+        this._type = '';
+        this._new = false;
+        this._data = null;
+        this.loaded = false;
     }
 
     constructor(private apiService: KeisAPIService) {
@@ -61,6 +77,20 @@ export class EditEquipmentComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    cancel() {
+        this.reset();
+    }
+
+    save() {
+        console.log(this);
+        if (this._new) {
+            // POST
+            return;
+        }
+
+        // PUT the request
     }
 
 

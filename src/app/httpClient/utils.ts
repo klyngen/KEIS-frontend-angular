@@ -1,6 +1,7 @@
 
 import { Equipment } from "./equipment";
 import { JsonElement } from './json-element';
+import { TableElement } from "./table-element";
 export class Utils {
     /**
      * convert objects into a nicer format
@@ -39,5 +40,19 @@ export class Utils {
         // If only single equipment
         equipment.push(new Equipment(this.object2JsonElement(data)));
         return equipment;
+    }
+
+    /** Creates a general tableElement
+      * @param data - Object dictionary
+      */
+    static object2TableElement(data): TableElement[] | TableElement {
+        if (Array.isArray(data)) {
+            const elements: TableElement[] = [];
+            data.forEach(item => {
+                elements.push(new TableElement(this.object2JsonElement(item)));
+            });
+            return elements;
+        }
+        return new TableElement(this.object2JsonElement(data));
     }
 }

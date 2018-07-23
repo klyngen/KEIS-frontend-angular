@@ -27,14 +27,12 @@
 
     <div class="form-group">
       <label for="">Description</label>
-      <textarea class="form-control" id="" name="" rows="3">
-{{_description}}
+      <textarea class="form-control" [(value)]="_description" id="" name="" rows="3">
       </textarea>
     </div>
 
-    <div class="btn-group">
-      <button (click)="concept()" class="btn btn-success">Save</button>
-    </div>
-
+    <button (click)="cancel()" class="btn btn-danger"><fa name="times"></fa> Cancel</button>
+        <button (click)="save()" class="btn btn-success pull-right"><fa name="floppy-o"></fa> Save</button>
   </div>
 </div>
+

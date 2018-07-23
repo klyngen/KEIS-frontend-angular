@@ -10,13 +10,13 @@
     <div class="row">
         <!-- Table column -->
         <div class="col-md-8">
-
-            <dynamic-table (clicked)="rowClicked($event)" [data]="equipment"></dynamic-table>
+            <button (click)="newEquipment()" class="btn btn-primary btn-block new-button"><fa name="plus"></fa> New Equipment</button>
+            <dynamic-table class="equipment-table" (clicked)="rowClicked($event)" [data]="equipment"></dynamic-table>
         </div>
 
         <!-- Info column -->
         <div class="col-md-4">
-          <edit-equipment [data]="selected"></edit-equipment>
+          <edit-equipment [newEquipment]="_new" [data]="selected"></edit-equipment>
         </div>
     </div>
 </div>
