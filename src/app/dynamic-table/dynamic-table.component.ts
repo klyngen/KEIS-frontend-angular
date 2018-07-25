@@ -34,7 +34,14 @@ export class DynamicTableComponent implements OnInit {
           rowCallback: (row: Node, data: any[] | Object, index: number) => {
               $('td', row).unbind('click');
               $('td', row).bind('click', () => {
-                  this.clicked.emit(this._data[index]);
+                  const id = data[0];
+                  this._data.forEach(item => {
+                      console.log(typeof item.getValue('id'));
+                      if ('' + item.getValue('id') === id) {
+                          this.clicked.emit(item);
+                          return;
+                      }
+                  });
               });
           }
       };

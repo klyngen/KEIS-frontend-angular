@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { Equipment } from '../../httpClient/equipment';
 import { KeisAPIService } from '../../keis-api.service';
 
@@ -19,6 +19,7 @@ export class EditEquipmentComponent implements OnInit {
 
     brandFlake: string;
     typeFlake: string;
+    newFlake: string;
 
     _brandAlternatives: string[] = [];
     _typeAlternatives: string[] = [];
@@ -41,6 +42,8 @@ export class EditEquipmentComponent implements OnInit {
         }
     }
 
+    @Output() receivedEquipment = new EventEmitter<Equipment>();
+
     private parseEquipment() {
         this._brand = this._data.getValue('Brand');
         this._type =  this._data.getValue('Type');
@@ -61,7 +64,9 @@ export class EditEquipmentComponent implements OnInit {
     constructor(private apiService: KeisAPIService) {
         this.brandFlake = this.apiService.snowflake();
         this.typeFlake = this.apiService.snowflake();
+        this.newFlake = this.apiService.snowflake();
 
+        // Define actions for various api-results
         this.apiService.getObserver().subscribe(data => {
             if (data.correlationId === this.brandFlake) {
                 this._brandAlternatives = data.data;
@@ -69,6 +74,10 @@ export class EditEquipmentComponent implements OnInit {
 
             if (data.correlationId === this.typeFlake) {
                 this._typeAlternatives = data.data;
+            }
+
+            if (data.correlationId === this.newFlake) {
+                this.receivedEquipment.emit(data.data);
             }
         });
 
@@ -86,12 +95,24 @@ export class EditEquipmentComponent implements OnInit {
     save() {
         console.log(this);
         if (this._new) {
-            // POST
+            console.log(this);
+            const equipment = new Equipment();
+            equipment.setValuePair('Model', this._model);
+            equipment.setValuePair('Brand', this._brand);
+            equipment.setValuePair('Type', this._type);
+            equipment.setValuePair('Description', this._description);
+            this.apiService.addEquipment(this.newFlake, equipment);
             return;
         }
 
         // PUT the request
     }
 
+    setModel(value) {
+        this._model = value;
+    }
 
+    setDescription(value) {
+        this._description = value;
+    }
 }

@@ -6,8 +6,8 @@ export class TableElement implements ITableElement {
     nameMapping: {[key: string]: string};
     blackList: string[] = [];
 
-    constructor(data: JsonElement[]) {
-        this.data = data;
+    constructor(data?: JsonElement[]) {
+        this.data = data === undefined ? [] : data;
     }
 
     /**
@@ -100,4 +100,12 @@ export class TableElement implements ITableElement {
         return res;
     }
 
+    createObject(): Object {
+        const data = {};
+        this.data.forEach(item => {
+            data[item.key] = item.value;
+        });
+
+        return data;
+    }
 }

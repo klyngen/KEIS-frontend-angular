@@ -74,7 +74,10 @@ export class KeisAPIService {
             }
         }, error => {
             this.alertService.addAlert(
-                new Alert('warning', 'unable to fetch equipment', 'might be cauced by bad configuration ' + error.message));
+                new Alert('warning',
+                          'unable to fetch equipment',
+                          'might be cauced by bad configuration '
+                          + error));
         });
     }
 
@@ -82,7 +85,7 @@ export class KeisAPIService {
  *  Post data to an API. This function is private while this is the raw implementation
  */
     private postData(snowflake: string, uri: string, data) {
-        this.httpClient.post(baseUrl + 'uri', data).pipe(map(item => {
+        this.httpClient.post(baseUrl + uri, data).pipe(map(item => {
             if (!this.handleServerErrors(item)) {
                // Make a happy alert?
                 return Utils.object2TableElement(item);
@@ -91,8 +94,17 @@ export class KeisAPIService {
         })).subscribe(success => {
             this.notifySubjects(success, snowflake);
         }, error => {
-            this.alertService.addAlert(new Alert('danger', 'unable to post data to ' + baseUrl + uri, 'the keis backend might not be running'));
+            console.log(error);
+            this.alertService.addAlert(
+                new Alert('danger',
+                          'unable to post data to ' + baseUrl + uri,
+                          'the keis backend might not be running \n Backend reply: '
+                          + error.message + '\n KEIS-reply: ' + error.error['error']));
         });
+    }
+
+    addEquipment(snowflake: string, data: Equipment) {
+        this.postData(snowflake, '/equipment', data.createObject());
     }
 
 
@@ -110,7 +122,9 @@ export class KeisAPIService {
             }
         }, error => {
             this.alertService.addAlert(
-                new Alert('warning', 'unable to fetch brand data', 'this is a client side implementation issue'));
+                new Alert('warning',
+                          'unable to fetch brand data',
+                          'this is a client side implementation issue'));
         });
     }
 
