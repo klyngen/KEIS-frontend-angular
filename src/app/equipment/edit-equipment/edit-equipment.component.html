@@ -1,5 +1,6 @@
 <div class="edit-equipment">
 
+
   <ng-container *ngIf="!loaded">
     <p class="lead">
       <fa name="mouse-pointer"></fa> Click on an element in the table to edit the equipment
@@ -12,6 +13,15 @@
   </ng-container>
 
   <div class="blurrable" [ngClass]="{'unloaded': !loaded}">
+
+      <ng-container *ngIf="_new">
+          <h3>New equipment</h3>
+      </ng-container>
+
+      <ng-container *ngIf="!_new">
+          <h3>Edit equipment</h3>
+      </ng-container>
+
     <div class="form-group">
       <label for="">Model</label>
       <input #model (keyup)="setModel(model.value)" class="form-control" name="" type="text" value="{{_model}}" placeholder="Model..." />
@@ -34,5 +44,6 @@
     <button (click)="cancel()" class="btn btn-danger"><fa name="times"></fa> Cancel</button>
         <button (click)="save()" class="btn btn-success pull-right"><fa name="floppy-o"></fa> Save</button>
   </div>
+
 </div>
 

@@ -6,16 +6,25 @@
     </ng-container>
 
     <ng-container *ngIf="!newMessages">
-      <span class="badge badge-primary read">{{alerts.length}}</span>
+      <span class="badge badge-danger read">{{alerts.length}}</span>
+    </ng-container>
+    
+    <ng-container *ngIf="!newMessages">
+        <span class="badge badge-info read">{{messages.length}}</span>
     </ng-container>
   </a>
   <div ngbDropdownMenu>
     <a href="{{item.createIssueUrl(issueUrl)}}" *ngFor="let item of alerts let i = index" class="dropdown-item">
 
       <span class="badge badge-{{item.classType}}">{{item.classType}}</span>{{item.title}}
-      <span class="cross-out"><fa name="times"></fa></span>
 
     </a>
+    <button *ngFor="let item of messages let i = index" class="dropdown-item">
+
+        <span class="badge badge-{{item.classType}}">{{item.classType}}</span>{{item.title}}
+        <span class="cross-out" (click)="removeMessage(i)"><fa name="times"></fa></span>
+
+    </button>
     <div class="dropdown-divider"></div>
     <button (click)="eraseAlerts()" class="dropdown-item">Clear alerts <fa name="eraser"></fa></button>
   </div>

@@ -87,14 +87,12 @@ export class KeisAPIService {
     private postData(snowflake: string, uri: string, data) {
         this.httpClient.post(baseUrl + uri, data).pipe(map(item => {
             if (!this.handleServerErrors(item)) {
-               // Make a happy alert?
                 return Utils.object2TableElement(item);
             }
             return null;
         })).subscribe(success => {
             this.notifySubjects(success, snowflake);
         }, error => {
-            console.log(error);
             this.alertService.addAlert(
                 new Alert('danger',
                           'unable to post data to ' + baseUrl + uri,
@@ -103,8 +101,28 @@ export class KeisAPIService {
         });
     }
 
+    private putData(snowflake: string, uri: string, data) {
+        this.httpClient.put(baseUrl + uri, data).subscribe(success => {
+            this.notifySubjects(success, snowflake);
+        }, error => {
+            this.alertService.addAlert(new Alert('danger', 'could not put data', 'the given url: ' + baseUrl + uri + '\n' + error.message + '\nKEIS reply: '));
+        });
+    }
+
+    updateEquipment(snowflake: string, data: Equipment, id: string) {
+        this.putData(snowflake, '/equipment/' + id, data.createObject());
+    }
+
     addEquipment(snowflake: string, data: Equipment) {
         this.postData(snowflake, '/equipment', data.createObject());
+    }
+
+    deleteEquipment(id: string) {
+        this.httpClient.delete(baseUrl + '/equipment/' + id).subscribe(item => {
+            this.alertService.addAlert(new Alert('info', 'Equipment deleted', ''));
+        }, error => {
+            this.alertService.addAlert(new Alert('danger', 'Error deleting equipment', 'Error: ' + error.error + '\n Message: ' + error.message));
+        });
     }
 
 

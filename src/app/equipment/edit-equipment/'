@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { Equipment } from '../../httpClient/equipment';
 import { KeisAPIService } from '../../keis-api.service';
-import { Subject } from 'rxjs';
 
 @Component({
     selector: 'edit-equipment',
@@ -9,7 +8,7 @@ import { Subject } from 'rxjs';
     styleUrls: ['./edit-equipment.component.css']
 })
 export class EditEquipmentComponent implements OnInit {
-    refreshEquipment: Subject<any>;
+
     loaded = false;
     _data: Equipment;
     _brand: string;
@@ -21,7 +20,6 @@ export class EditEquipmentComponent implements OnInit {
     brandFlake: string;
     typeFlake: string;
     newFlake: string;
-    putFlake: string;
 
     _brandAlternatives: string[] = [];
     _typeAlternatives: string[] = [];
@@ -29,6 +27,7 @@ export class EditEquipmentComponent implements OnInit {
 
     @Input()
     set newEquipment(data) {
+        console.log(this);
         if (data) {
             this.reset();
             this.loaded = true;
@@ -37,19 +36,14 @@ export class EditEquipmentComponent implements OnInit {
     }
 
     @Input()
-    set refresh(subject: Subject<any>) {
-        this.refreshEquipment = subject;
-    }
-
-    @Input()
     set data(data) {
         if (data !== null) {
             this.newEquipmentChange.emit(false);
             this.reset();
             this._data = data;
-            this._new = false;
             this.loaded = true;
             this.parseEquipment();
+            this._new = false;
         }
     }
 
@@ -77,7 +71,6 @@ export class EditEquipmentComponent implements OnInit {
         this.brandFlake = this.apiService.snowflake();
         this.typeFlake = this.apiService.snowflake();
         this.newFlake = this.apiService.snowflake();
-        this.putFlake = this.apiService.snowflake();
 
         // Define actions for various api-results
         this.apiService.getObserver().subscribe(data => {
@@ -91,10 +84,6 @@ export class EditEquipmentComponent implements OnInit {
 
             if (data.correlationId === this.newFlake) {
                 this.receivedEquipment.emit(data.data);
-            }
-
-            if (data.correlationId === this.putFlake) {
-                this.refreshEquipment.next();
             }
         });
 
@@ -110,19 +99,19 @@ export class EditEquipmentComponent implements OnInit {
     }
 
     save() {
-        const equipment = new Equipment();
-        equipment.setValuePair('Model', this._model);
-        equipment.setValuePair('Brand', this._brand);
-        equipment.setValuePair('Type', this._type);
-        equipment.setValuePair('Description', this._description);
-
+        console.log(this);
         if (this._new) {
+            console.log(this);
+            const equipment = new Equipment();
+            equipment.setValuePair('Model', this._model);
+            equipment.setValuePair('Brand', this._brand);
+            equipment.setValuePair('Type', this._type);
+            equipment.setValuePair('Description', this._description);
             this.apiService.addEquipment(this.newFlake, equipment);
             return;
         }
 
-        // Should in theory put the correct data
-        this.apiService.updateEquipment(this.putFlake, equipment, this._data.getValue('id'));
+        // PUT the request
     }
 
     setModel(value) {

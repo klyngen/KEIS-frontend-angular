@@ -3,8 +3,9 @@ import { JsonElement } from './json-element';
 
 export class TableElement implements ITableElement {
     data: JsonElement[] = [];
-    nameMapping: {[key: string]: string};
-    blackList: string[] = [];
+    nameMapping: {[key: string]: string} = {};
+    priority: {[key: string]: number} = {};
+    blackList: string[] = ['success', 'error'];
 
     constructor(data?: JsonElement[]) {
         this.data = data === undefined ? [] : data;
@@ -27,9 +28,15 @@ export class TableElement implements ITableElement {
 
     /**
      * Creates the header row for a table
+     * NB: SHOULD BE A RECURCIVE FUNCTION
      */
     createHeader(): string[] {
         const header: string[] = [];
+        this.data.sort((n1, n2) => {
+            const priority1 = this.priority[n1.key] === undefined ? 100 : this.priority[n1.key];
+            const priority2 = this.priority[n2.key] === undefined ? 100 : this.priority[n2.key];
+            return priority1 - priority2;
+        });
 
         this.data.forEach(item => {
             if (!this.isBlackListed(item.key)) {
@@ -107,5 +114,15 @@ export class TableElement implements ITableElement {
         });
 
         return data;
+    }
+
+    createDatatableHeader(): any {
+        const header = this.createHeader();
+        const res = [];
+
+        header.forEach(item => {
+            res.push({'title': item});
+        });
+        return res;
     }
 }

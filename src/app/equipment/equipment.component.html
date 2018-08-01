@@ -11,12 +11,15 @@
         <!-- Table column -->
         <div class="col-md-8">
             <button (click)="newEquipment()" class="btn btn-primary btn-block new-button"><fa name="plus"></fa> New Equipment</button>
-            <dynamic-table class="equipment-table" (clicked)="rowClicked($event)" [data]="equipment"></dynamic-table>
+            <dynamic-table [reloadTrigger]="tableTrigger" class="equipment-table" (clicked)="rowClicked($event)" [data]="equipment"></dynamic-table>
         </div>
 
         <!-- Info column -->
         <div class="col-md-4">
-          <edit-equipment [newEquipment]="_new" [data]="selected"></edit-equipment>
+          <edit-equipment [refresh]="refreshTrigger" (receivedEquipment)="addElement($event)" [(newEquipment)]="_new" [data]="selected"></edit-equipment>
+          <ng-container *ngIf="selected">
+              <delete-equipment (clicked)="delete()" [refresh]="refreshTrigger"></delete-equipment>
+          </ng-container>
         </div>
     </div>
 </div>

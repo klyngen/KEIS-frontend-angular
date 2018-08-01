@@ -1,15 +1,5 @@
 <ng-container *ngIf="!_data.length">
     <h3>No data. Check messages or add equipment</h3>
 </ng-container>
-<table class="table table-striped" [dtOptions]="dtOptions" datatable [dtTrigger]="dtTrigger">
-  <thead>
-    <tr>
-      <th *ngFor="let item of _header">{{item}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of _data">
-      <td *ngFor="let subitem of item.createDataRow(_header)">{{subitem}}</td>
-    </tr>
-  </tbody>
+<table class="table table-striped hover" [dtOptions]="dtOptions" datatable [dtTrigger]="dtTrigger">
 </table>

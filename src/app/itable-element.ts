@@ -7,4 +7,5 @@ export interface ITableElement {
     createHeader: () => string[];
     createDataRow: (header: string[]) => any[];
     getValue: (key: string) => any;
+    createDatatableHeader: () => any;
 }
