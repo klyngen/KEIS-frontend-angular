@@ -1,11 +1,16 @@
 <div class="equipment-status side-divider">
-    <h3>Inventory quality</h3>
+    <h3>Inventory quality <span class="badge badge-{{status}}">{{average}}</span></h3>
 
     <ngx-charts-bar-horizontal [showDataLabel]="true"
                                [view]="[elementWidth(), _height]"
                                [results]="_data"
+                               [showXAxisLabel]="true"
+                               [showYAxisLabel]="true"
+                               [xAxisLabel]="instances"
+                               [yAxisLabel]="condition"
                                [yAxis]="true"
                                [xAxis]="true">
+        
     </ngx-charts-bar-horizontal>
 </div>
 

@@ -1,3 +1,27 @@
 <div class="instance-add side-divider">
     <h3>Add an Instance</h3>
+    <div  class="form-group">
+        <label for="rfid">RFID or label <fa name="question-circle" ngbPopover="10 is a new flawless device. Above 5 is normal wear and tear that does not harm the usage of the device. Benieth 5, is a device with major flaws" popoverTitle="Condition guidelines"></fa></label>
+        <input (change)="validateRFID(rfid)" #rfid="ngModel" required [(ngModel)]="_rfid" id="rfid" class="form-control" name="rfid" type="text" value=""/>
+        <div  [hidden]="rfid.valid || rfid.pristine" class="alert alert-danger"  >
+            RFID is required
+        </div>
+
+        <div [hidden]="rfidValid" class="alert alert-warning">
+            This RFID is already in use
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="condition">Condition <span class="badge badge-primary">{{_condition}}</span></label>
+        <input [(ngModel)]="_condition" min="1" max="10" class="form-control-range" id="condition" name="condition" type="range" value=""/>
+
+    </div>
+
+    <div class="form-group">
+        <label for="date">Purchase time</label>
+        <input required [(ngModel)]="_date" class="form-control" id="date" name="purchaseTime" type="date" value=""/>
+    </div>
+
+    <button class="btn btn-primary btn-block" [disabled]="!verified()" (click)="submission()">Submit</button>
 </div>

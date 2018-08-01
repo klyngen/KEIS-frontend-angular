@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Equipment } from '../httpClient/equipment';
 import {KeisAPIService} from '../keis-api.service';
 import { Subject } from 'rxjs';
+import { TableElement } from '../httpClient/table-element';
+import { JsonElement } from '../httpClient/json-element';
 
 @Component({
   selector: 'equipment',
@@ -17,6 +19,7 @@ export class EquipmentComponent implements OnInit {
     selected: Equipment = null;
     equipmentFlake: string;
     singleEquipmentFlake: string;
+    instanceFlake: string;
     _new = false;
     _push: Equipment = null;
     _singleData: Equipment;
@@ -30,14 +33,19 @@ export class EquipmentComponent implements OnInit {
   ngOnInit() {
       this.equipmentFlake = this.httpClient.snowflake();
       this.singleEquipmentFlake = this.httpClient.snowflake();
+      this.instanceFlake = this.httpClient.snowflake();
       this.httpClient.getObserver().subscribe(data => {
           if (data.correlationId === this.equipmentFlake) {
               this.equipment = data.data;
           }
 
           if (data.correlationId === this.singleEquipmentFlake) {
-              console.log(data.data);
               this._singleData = data.data;
+          }
+
+          if (data.correlationId === this.instanceFlake) {
+              this._singleData.getValue('instances').push(new JsonElement(data.data.getValue('id'), data.data));
+              this.httpClient.getSingleEquipment(this.singleEquipmentFlake, this.selected.getValue('id'));
           }
       });
       this.httpClient.getAllEquipment(this.equipmentFlake);
@@ -61,4 +69,17 @@ export class EquipmentComponent implements OnInit {
             this.httpClient.getAllEquipment(this.equipmentFlake);
         }
     }
+
+    editHeight(): number {
+        if (this.selected !== null) {
+            return $('.table-column').height();
+        }
+        return 1000;
+    }
+
+    newInstance(element: TableElement) {
+        element.setValuePair('equipment', this._singleData.getValue('id'));
+        this.httpClient.addInstance(this.instanceFlake, element);
+    }
+
 }

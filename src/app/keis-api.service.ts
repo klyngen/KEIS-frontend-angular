@@ -117,6 +117,10 @@ export class KeisAPIService {
         });
     }
 
+    addInstance(snowflake: string, data: TableElement) {
+        this.postData(snowflake, '/instance', data.createObject());
+    }
+
     private putData(snowflake: string, uri: string, data) {
         this.httpClient.put(baseUrl + uri, data).subscribe(success => {
             this.notifySubjects(success, snowflake);
@@ -170,5 +174,18 @@ export class KeisAPIService {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
         return text;
+    }
+
+
+    verifyRFID(snowflake: string, rfid: string) {
+        this.httpClient.post(baseUrl + '/rfid', {'rfid': rfid}).subscribe(item => {
+            if (item['success']) {
+                this.notifySubjects(true, snowflake);
+                return;
+            }
+            this.notifySubjects(false, snowflake);
+        }, error => {
+            this.alertService.addAlert(new Alert('warning', 'could not verify RFID', 'submission of equipment will still work'));
+        });
     }
 }

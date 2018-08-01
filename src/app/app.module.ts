@@ -23,6 +23,9 @@ import { EquipmentStatusComponent } from './equipment/equipment-status/equipment
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InstanceAddComponent} from './equipment/instance-add/instance-add.component';
+import { FormsModule } from '@angular/forms';
+import { DeleteAllInstancesComponent } from './equipment/delete-all-instances/delete-all-instances.component';
+import { DeleteInstanceComponent } from './equipment/delete-instance/delete-instance.component';
 
 @NgModule({
   declarations: [
@@ -39,10 +42,13 @@ import {InstanceAddComponent} from './equipment/instance-add/instance-add.compon
       DropDownInputComponent,
       DeleteEquipmentComponent,
       EquipmentStatusComponent,
-      InstanceAddComponent
+      InstanceAddComponent,
+      DeleteAllInstancesComponent,
+      DeleteInstanceComponent
   ],
   imports: [
-    BrowserModule,
+      BrowserModule,
+      FormsModule,
       AppRoutingModule,
       AngularFontAwesomeModule,
       HttpClientModule,

@@ -10,18 +10,21 @@ export class EquipmentStatusComponent implements OnInit {
 
     _data = [];
     _height = 350;
+    status = 'success';
+    average = 10.0;
 
   constructor() { }
 
     @Input()
     set data(data: Equipment) {
         //this._data = data;
+        let average = 0;
         const temp = this.createBaseStats();
         if (data !== undefined) {
             if (data.getValue('instances') !== null) {
                 data.getValue('instances').forEach(item => {
-                    console.log(item.value[1].value);
                     temp[item.value[1].value].value += 1;
+                    average += item.value[1].value;
                 });
 
                 for (let i = 0; i < temp.length; i++) {
@@ -30,11 +33,21 @@ export class EquipmentStatusComponent implements OnInit {
                         i = 0;
                     }
                 }
-                temp.splice(0, 1);
+                this.average = average / data.getValue('instances').length;
+                this.createStatus(this.average);
             }
-            console.log(temp);
             this._data = temp;
             this._height = (100 + (temp.length * 20));
+        }
+    }
+
+    createStatus(average: number) {
+        if (average > 7) {
+            this.status = 'success';
+        } else if (average > 4) {
+            this.status = 'warning';
+        } else {
+            this.status = 'danger';
         }
     }
 

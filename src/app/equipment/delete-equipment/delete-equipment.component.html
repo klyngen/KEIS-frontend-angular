@@ -17,5 +17,8 @@
             <button class="btn btn-danger btn-block" (click)="delete()">Confirm</button>
         </div>
     </ng-template>
-    <button class="btn btn-danger btn-block" (click)="openModal(content)">Delete</button>
+    <button class="btn btn-danger btn-block" [disabled]="canDelete()" (click)="openModal(content)">Delete</button>
+    <div [hidden]="!canDelete()" class="alert alert-info">
+        Equipment cannot be deleted with instances. Delete theese instances first.
+    </div>
 </div>
