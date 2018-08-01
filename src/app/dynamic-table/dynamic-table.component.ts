@@ -75,7 +75,6 @@ export class DynamicTableComponent implements OnInit, AfterViewInit, OnDestroy {
               $('td', row).unbind('click');
               $('td', row).bind('click', () => {
                   const id = data[0];
-                  console.log(index, data, id);
                   this._data.forEach(item => {
                       if (item.getValue('id') === id) {
                           this.clicked.emit(item);

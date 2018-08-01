@@ -16,7 +16,14 @@ export class Utils {
             for (const key in data) {
                 // There is some nested elements
                 if (typeof data[key] === 'object') {
-                    elements = elements.concat(this.object2JsonElement(data[key]));
+                    elements.push(new JsonElement(key, this.object2JsonElement(data[key])));
+                } else if (Array.isArray(data[key])) {
+                    console.log("is arrya");
+                    const tempArray = [];
+                    data[key].forEach(item => {
+                        tempArray.push(this.object2JsonElement(item));
+                    });
+                    elements.push(new JsonElement(key, tempArray));
                 } else {
                     elements.push(new JsonElement(key, data[key]));
                 }

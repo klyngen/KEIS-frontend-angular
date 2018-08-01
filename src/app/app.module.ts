@@ -19,6 +19,9 @@ import { AlertComponent } from './alert/alert.component';
 import { EditEquipmentComponent } from './equipment/edit-equipment/edit-equipment.component';
 import { DropDownInputComponent } from './small/drop-down-input/drop-down-input.component';
 import { DeleteEquipmentComponent } from './equipment/delete-equipment/delete-equipment.component';
+import { EquipmentStatusComponent } from './equipment/equipment-status/equipment-status.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { DeleteEquipmentComponent } from './equipment/delete-equipment/delete-eq
       AlertComponent,
       EditEquipmentComponent,
       DropDownInputComponent,
-      DeleteEquipmentComponent
+      DeleteEquipmentComponent,
+      EquipmentStatusComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,8 @@ import { DeleteEquipmentComponent } from './equipment/delete-equipment/delete-eq
       AngularFontAwesomeModule,
       HttpClientModule,
       DataTablesModule,
+      NgxChartsModule,
+      BrowserAnimationsModule,
       NgbModule.forRoot()
   ],
   providers: [],

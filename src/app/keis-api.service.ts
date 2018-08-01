@@ -81,6 +81,22 @@ export class KeisAPIService {
         });
     }
 
+    /**
+     *
+     * Returns the a single instance of an equipment
+     */
+    getSingleEquipment(snowflake: string, id: string) {
+        this.httpClient.get(baseUrl + '/equipment/' + id).pipe(map(item => {
+            if (!this.handleServerErrors(item)) {
+                return <Equipment> Utils.object2Equipment(item['data'])[0];
+            }
+        })).subscribe(success => {
+            this.notifySubjects(success, snowflake);
+        }, error => {
+            this.alertService.addAlert(new Alert('danger', 'cannot fetch some data', 'error: ' + error.error + '\n message: ' + error.message));
+        });
+    }
+
 /**
  *  Post data to an API. This function is private while this is the raw implementation
  */

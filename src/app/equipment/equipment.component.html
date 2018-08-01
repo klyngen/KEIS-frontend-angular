@@ -19,7 +19,9 @@
           <edit-equipment [refresh]="refreshTrigger" (receivedEquipment)="addElement($event)" [(newEquipment)]="_new" [data]="selected"></edit-equipment>
           <ng-container *ngIf="selected">
               <delete-equipment (clicked)="delete()" [refresh]="refreshTrigger"></delete-equipment>
+              <equipment-status [data]="_singleData"></equipment-status>
           </ng-container>
+
         </div>
     </div>
 </div>
