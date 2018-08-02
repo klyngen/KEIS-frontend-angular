@@ -1,3 +1,21 @@
-<p>
-  users works!
-</p>
+<div class="jumbotron jumbotron-fluid titletron">
+    <div class="container">
+        <h1 class="display-4"><fa name="users"></fa> Users</h1>
+        <p class="lead">
+            Add delete and modify users
+        </p>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <dynamic-table [data]="_users"></dynamic-table>
+        </div>
+
+        <div class="col-md-4">
+            <add-user></add-user>
+            <delete-user></delete-user>
+        </div>
+    </div>
+</div>

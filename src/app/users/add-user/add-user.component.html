@@ -1,0 +1,22 @@
+<div class="add-user side-divider">
+    <h3>Add user</h3>
+    <div class="form-group">
+        <label for="">Studentnumber</label>
+        <input name="studentnumber" [(ngModel)]="_studentNumber" #number="ngModel" required class="form-control"  type="text" value=""/>
+    </div>
+
+    <div class="form-group">
+        <label for="">Email</label>
+        <input name="email" [(ngModel)]="_email" #email="ngModel" required class="form-control" type="email" value=""/>
+    </div>
+
+    <div class="form-group">
+        <label for="">Name</label>
+        <input name="name" [(ngModel)]="_name" #name="ngModel" required class="form-control" type="text" value=""/>
+    </div>
+
+    <div class="alert alert-info">
+        <b>Info</b> all fields has to be filled to be able to submit
+    </div>
+    <button [disabled]="!verify()" (click)="submit()" class="btn btn-primary btn-block"><fa name="floppy-o"></fa> Submit</button>
+</div>
