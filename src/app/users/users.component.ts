@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../httpClient/user';
 import { KeisAPIService } from '../keis-api.service';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'users',
@@ -10,7 +11,9 @@ import { KeisAPIService } from '../keis-api.service';
 export class UsersComponent implements OnInit {
 
     _users: User[] = [];
+    _selected: User;
 
+    _addSubject: Subject<boolean> = new Subject();
 
     fetchFlake: string;
 
@@ -27,6 +30,14 @@ export class UsersComponent implements OnInit {
 
     ngOnInit() {
         this.httpClient.getAllUsers(this.fetchFlake);
+    }
+
+    clicked(event) {
+        this._selected = event;
+    }
+
+    newButton() {
+        this._addSubject.next();
     }
 
 }

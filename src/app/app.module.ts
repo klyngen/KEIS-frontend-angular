@@ -26,6 +26,8 @@ import {InstanceAddComponent} from './equipment/instance-add/instance-add.compon
 import { FormsModule } from '@angular/forms';
 import { DeleteAllInstancesComponent } from './equipment/delete-all-instances/delete-all-instances.component';
 import { DeleteInstanceComponent } from './equipment/delete-instance/delete-instance.component';
+import { AddUserComponent } from './users/add-user/add-user.component';
+import { DeleteUserComponent } from './users/users/delete-user/delete-user.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { DeleteInstanceComponent } from './equipment/delete-instance/delete-inst
       EquipmentStatusComponent,
       InstanceAddComponent,
       DeleteAllInstancesComponent,
-      DeleteInstanceComponent
+      DeleteInstanceComponent,
+      AddUserComponent,
+      DeleteUserComponent
   ],
   imports: [
       BrowserModule,

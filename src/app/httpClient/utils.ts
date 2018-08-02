@@ -71,13 +71,13 @@ export class Utils {
         // Is there several equipment?
         if (Array.isArray(data)) {
             data.forEach(item => {
-                user.push(new Equipment(this.object2JsonElement(item)));
+                user.push(new User(this.object2JsonElement(item)));
             });
             return user;
         }
 
         // If only single equipment
-        user.push(new Equipment(this.object2JsonElement(data)));
+        user.push(new User(this.object2JsonElement(data)));
         return user;
     }
 }

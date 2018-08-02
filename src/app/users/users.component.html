@@ -6,15 +6,14 @@
         </p>
     </div>
 </div>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-8">
-            <dynamic-table [data]="_users"></dynamic-table>
+            <button (click)="newButton()" class="btn btn-primary btn-block"><fa name="plus"></fa> New user</button>
+            <dynamic-table (clicked)="clicked($event)" [data]="_users"></dynamic-table>
         </div>
-
         <div class="col-md-4">
-            <add-user></add-user>
+            <add-user [newTrigger]="_addSubject" [data]="_selected"></add-user>
             <delete-user></delete-user>
         </div>
     </div>

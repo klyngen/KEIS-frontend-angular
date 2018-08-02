@@ -14,6 +14,7 @@ export class Equipment extends TableElement {
         this.nameMapping['brands'] = 'Brand';
         this.nameMapping['types'] = 'Type';
         this.nameMapping['model'] = 'Model';
+        this.nameMapping['rented'] = 'Rented';
 
         this.priority['id'] = 0;
         this.priority['brand'] = 1;

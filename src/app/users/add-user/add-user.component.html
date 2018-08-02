@@ -1,8 +1,18 @@
-<div class="add-user side-divider">
-    <h3>Add user</h3>
+<div class="add-user side-divider" [ngClass]="{'unloaded': !_loaded}">
+    <ng-container *ngIf="_newUser">
+        <h3>New user</h3>
+    </ng-container>
+
+    <ng-container *ngIf="!_newUser">
+        <h3>Update user</h3>
+    </ng-container>
+
     <div class="form-group">
         <label for="">Studentnumber</label>
-        <input name="studentnumber" [(ngModel)]="_studentNumber" #number="ngModel" required class="form-control"  type="text" value=""/>
+        <input (keyup)="verifyNumber(number.model)" name="studentnumber" [(ngModel)]="_studentNumber" #number="ngModel" required class="form-control"  type="text" value=""/>
+    </div>
+    <div [hidden]="!_userExist" class="alert alert-danger">
+        <b>Number in use</b> this number is already in use
     </div>
 
     <div class="form-group">
@@ -15,8 +25,8 @@
         <input name="name" [(ngModel)]="_name" #name="ngModel" required class="form-control" type="text" value=""/>
     </div>
 
-    <div class="alert alert-info">
+    <div [hidden]="verify(email)" class="alert alert-info">
         <b>Info</b> all fields has to be filled to be able to submit
     </div>
-    <button [disabled]="!verify()" (click)="submit()" class="btn btn-primary btn-block"><fa name="floppy-o"></fa> Submit</button>
+    <button [disabled]="!verify(email)" (click)="submit()" class="btn btn-primary btn-block"><fa name="floppy-o"></fa> Submit</button>
 </div>

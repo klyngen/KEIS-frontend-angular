@@ -199,11 +199,11 @@ export class KeisAPIService {
 
 
     createUser(snowflake: string, data: TableElement) {
-        this.postData(snowflake, baseUrl + '/user', data.createObject());
+        this.postData(snowflake, '/user', data.createObject());
     }
 
     updateUser(snowflake: string, id: string, data: TableElement) {
-        this.putData(snowflake, baseUrl + '/user/' + id, data.createObject());
+        this.putData(snowflake, '/user/' + id, data.createObject());
     }
 
     deleteUser(snowflake: string, id: string) {
@@ -214,6 +214,7 @@ export class KeisAPIService {
     userSearch(snowflake: string, id: string) {
         this.httpClient.get(baseUrl + '/user/search/' + id).pipe(map(item => {
             if (!this.handleServerErrors(item)) {
+                console.log(item);
                 return Utils.object2User(item['data']);
             }
         })).subscribe(item => {
@@ -225,6 +226,8 @@ export class KeisAPIService {
 
     getAllUsers(snowflake: string) {
         this.httpClient.get(baseUrl + '/user').pipe(map(item => {
+            console.log(item);
+            console.log(Utils.object2User(item));
             if (!this.handleServerErrors(item)) {
                 return Utils.object2User(item['data']);
             }
@@ -233,7 +236,5 @@ export class KeisAPIService {
         }, error => {
             this.alertService.addAlert(new Alert('danger', 'error fetching users', 'Error message: ' + JSON.stringify(error)));
         });
-        
-    } 
-
+    }
 }
