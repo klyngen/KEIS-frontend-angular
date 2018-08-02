@@ -1,3 +1,26 @@
-<p>
-  delete-all-instances works!
-</p>
+<div class="delete-all-instances side-divider">
+    <h3>Delete all instances</h3>
+    <div class="alert alert-warning">
+        <b>Warning</b> This action will destroy your inventory for the selected equipment. This is a poorly made web-application. <b>No undo button here.</b>
+    </div>
+    <button (click)="openModal(content)" class="btn btn-danger btn-block">Delete</button>
+
+
+
+    <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Do you really want to do this?</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>
+                There will be no more modals. The confirmation-button will delete all instances
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger btn-block" (click)="delete()">Confirm</button>
+        </div>
+    </ng-template>
+</div>

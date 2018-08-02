@@ -145,6 +145,14 @@ export class KeisAPIService {
         });
     }
 
+    deleteInstance(snowflake: string, rfid: string) {
+        this.httpClient.request('delete', baseUrl + '/instance', {body: {'RFID': rfid}}).subscribe(item => {
+            this.notifySubjects(true, snowflake);
+        }, error => {
+            this.alertService.addAlert(new Alert('danger', 'Could not delete instance', 'Error: ' + error.error + '\n Message: ' + error.message));
+        });
+    }
+
 
     getBrandsAndTypes(snowflake: string, uri: string) {
         this.httpClient.get(baseUrl + uri).subscribe(data => {
@@ -188,4 +196,44 @@ export class KeisAPIService {
             this.alertService.addAlert(new Alert('warning', 'could not verify RFID', 'submission of equipment will still work'));
         });
     }
+
+
+    createUser(snowflake: string, data: TableElement) {
+        this.postData(snowflake, baseUrl + '/user', data.createObject());
+    }
+
+    updateUser(snowflake: string, id: string, data: TableElement) {
+        this.putData(snowflake, baseUrl + '/user/' + id, data.createObject());
+    }
+
+    deleteUser(snowflake: string, id: string) {
+        this.httpClient.request('delete', baseUrl + '/user/' + id);
+    }
+
+
+    userSearch(snowflake: string, id: string) {
+        this.httpClient.get(baseUrl + '/user/search/' + id).pipe(map(item => {
+            if (!this.handleServerErrors(item)) {
+                return Utils.object2User(item['data']);
+            }
+        })).subscribe(item => {
+            this.notifySubjects(item, snowflake);
+        }, error => {
+            this.alertService.addAlert(new Alert('danger', 'error fetching users', 'Error message: ' + JSON.stringify(error)));
+        });
+    }
+
+    getAllUsers(snowflake: string) {
+        this.httpClient.get(baseUrl + '/user').pipe(map(item => {
+            if (!this.handleServerErrors(item)) {
+                return Utils.object2User(item['data']);
+            }
+        })).subscribe(item => {
+            this.notifySubjects(item, snowflake);
+        }, error => {
+            this.alertService.addAlert(new Alert('danger', 'error fetching users', 'Error message: ' + JSON.stringify(error)));
+        });
+        
+    } 
+
 }

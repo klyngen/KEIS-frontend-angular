@@ -24,6 +24,8 @@
                     <delete-equipment [equipment]="_singleData" (clicked)="delete()" [refresh]="refreshTrigger"></delete-equipment>
                     <instance-add (submit)="newInstance($event)"></instance-add>
                     <equipment-status [data]="_singleData"></equipment-status>
+                    <delete-instance [trigger]="refreshTrigger"></delete-instance>
+                    <delete-all-instances [trigger]="refreshTrigger" [equipment]="_singleData"></delete-all-instances>
                 </ng-container>
             </div>
 

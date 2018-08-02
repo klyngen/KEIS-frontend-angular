@@ -1,3 +1,14 @@
-<p>
-  delete-instance works!
-</p>
+<div class="delete-instance side-divider">
+    <h3>Delete instance</h3>
+
+    <div class="form-group">
+        <label for="">RFID</label>
+        <input (keyup)="verify(rfid)" class="form-control" placeholder="RFID-code" required #rfid="ngModel" [(ngModel)]="_rfid" name="" type="text" value=""/>
+    </div>
+
+    <button (click)="delete()" [disabled]="!verifiedRFID" class="btn btn-danger btn-block">Delete</button>
+    <div [hidden]="!verifiedRFID" class="alert alert-success">
+        The RFID exists and the press of the delete button will set the RFID free
+    </div>
+
+</div>

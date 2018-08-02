@@ -27,6 +27,7 @@ export class EquipmentComponent implements OnInit {
     constructor(private httpClient: KeisAPIService) {
         this.refreshTrigger.asObservable().subscribe(item => {
             this.httpClient.getAllEquipment(this.equipmentFlake);
+            this.httpClient.getSingleEquipment(this.singleEquipmentFlake, this.selected.getValue('id'));
         });
     }
 
@@ -67,6 +68,7 @@ export class EquipmentComponent implements OnInit {
         if (this.selected !== undefined) {
             this.httpClient.deleteEquipment(this.selected.getValue('id'));
             this.httpClient.getAllEquipment(this.equipmentFlake);
+            this.refreshTrigger.next();
         }
     }
 
@@ -81,5 +83,4 @@ export class EquipmentComponent implements OnInit {
         element.setValuePair('equipment', this._singleData.getValue('id'));
         this.httpClient.addInstance(this.instanceFlake, element);
     }
-
 }

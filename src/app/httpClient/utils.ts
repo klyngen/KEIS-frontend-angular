@@ -2,6 +2,7 @@
 import { Equipment } from "./equipment";
 import { JsonElement } from './json-element';
 import { TableElement } from "./table-element";
+import { User } from "./user";
 export class Utils {
     /**
      * convert objects into a nicer format
@@ -61,5 +62,22 @@ export class Utils {
             return elements;
         }
         return new TableElement(this.object2JsonElement(data));
+    }
+
+
+    static object2User(data): User[] {
+        const user: User[] = [];
+
+        // Is there several equipment?
+        if (Array.isArray(data)) {
+            data.forEach(item => {
+                user.push(new Equipment(this.object2JsonElement(item)));
+            });
+            return user;
+        }
+
+        // If only single equipment
+        user.push(new Equipment(this.object2JsonElement(data)));
+        return user;
     }
 }
