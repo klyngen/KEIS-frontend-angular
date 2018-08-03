@@ -1,0 +1,22 @@
+<div class="add-rent side-divider">
+    <h3>Add new rent</h3>
+
+    <div class="form-group">
+        <label>RFID</label>
+        <input required class="form-control" (keyup)="rfidVerify(rfid.model)" #rfid="ngModel" [(ngModel)]="_rfid" name="rfid" type="text" value=""/>
+    </div>
+
+    <div [hidden]="_verifiedRfid || !_rfid" class="alert alert-warning">
+        <b>Warning: </b> field must be an existing RFID. The given RFID does not exist in KEIS.
+    </div>
+
+    <div class="form-group">
+        <label>Student Number</label>
+        <input required class="form-control" #number="ngModel" (keyup)="numberVerify(number.model)" [(ngModel)]="_number" name="number" type="text" value=""/>
+    </div>
+
+    <div [hidden]="_verifiedNumber || !_number" class="alert alert-warning">
+        <b>Warning: </b> field must be an existing user id. The given user does not exist in KEIS.
+    </div>
+    <button [disabled]="!verified()" (click)="submit()" class="btn btn-primary btn-block"><fa name="floppy-o"></fa> Submit</button>
+</div>

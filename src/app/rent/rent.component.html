@@ -1,3 +1,24 @@
-<p>
-  rent works!
-</p>
+<div class="jumbotron jumbotron-fluid titletron">
+    <div class="container">
+        <h1 class="display-4"><fa name="exchange"></fa> Rent</h1>
+        <p class="lead">
+            This is the place for handling the rents
+        </p>
+    </div>
+
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <dynamic-table [observeData]="_dataSubject" (clicked)="clicked($event)" ></dynamic-table>
+        </div>
+
+        <div class="col-md-4">
+            <div [ngClass]="{'unloaded': !loaded}">
+                <add-rent></add-rent>
+                <delete-rent></delete-rent>
+            </div>
+        </div>
+    </div>
+</div>

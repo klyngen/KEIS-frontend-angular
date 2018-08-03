@@ -33,6 +33,7 @@ export class DynamicTableComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() set observeData(subject: Subject<TableElement[]>) {
         this.dta = [];
         subject.asObservable().subscribe(item => {
+
             this._data = item;
             if (this.dta.length === 0) {
                 this._header = item[0].createHeader();

@@ -17,6 +17,7 @@
                 <add-user [newTrigger]="_addSubject" (newElement)="newElement()" [data]="_selected"></add-user>
                 <ng-container *ngIf="_selected">
                     <delete-user [data]="_selected" [refreshTrigger]="_refreshObserver"></delete-user>
+                    <user-rent [user]="_selected"></user-rent>
                 </ng-container>
             </div>
         </div>

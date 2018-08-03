@@ -1,15 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Rent } from '../httpClient/rent';
+import { KeisAPIService } from '../keis-api.service';
 
 @Component({
-  selector: 'rent',
-  templateUrl: './rent.component.html',
-  styleUrls: ['./rent.component.css']
+    selector: 'rent',
+    templateUrl: './rent.component.html',
+    styleUrls: ['./rent.component.css']
 })
 export class RentComponent implements OnInit {
 
-  constructor() { }
+    _dataSubject: Subject<Rent[]> = new Subject();
+    rentFlake: string;
+    loaded = true;
 
-  ngOnInit() {
-  }
+    constructor(private httpClient: KeisAPIService) {
+        this.rentFlake = httpClient.snowflake();
+
+        httpClient.getObserver().subscribe(item => {
+            if (item.correlationId === this.rentFlake) {
+
+                console.log(item);
+                this._dataSubject.next(item.data);
+            }
+        });
+    }
+
+    ngOnInit() {
+        this.httpClient.getAllRent(this.rentFlake);
+    }
+
+    clicked(event) {
+        console.log(event);
+    }
 
 }

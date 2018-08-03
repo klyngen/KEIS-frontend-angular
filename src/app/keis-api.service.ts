@@ -277,4 +277,10 @@ export class KeisAPIService {
     }
 
 
+    // INSTANCE FUNCTION
+    getInstance(snowflake: string, id: string) {
+        this.postData(snowflake, '/instance/rfid', {'RFID': id});
+    }
+
+
 }
