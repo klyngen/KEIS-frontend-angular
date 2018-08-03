@@ -230,8 +230,6 @@ export class KeisAPIService {
 
     getAllUsers(snowflake: string) {
         this.httpClient.get(baseUrl + '/user').pipe(map(item => {
-            console.log(item);
-            console.log(Utils.object2User(item));
             if (!this.handleServerErrors(item)) {
                 return Utils.object2User(item['data']);
             }

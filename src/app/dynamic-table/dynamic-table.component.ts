@@ -30,56 +30,36 @@ export class DynamicTableComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dtTrigger.unsubscribe();
     }
 
-    @Input()
-    set data(data: ITableElement[]) {
-        this._data = data;
+    @Input() set observeData(subject: Subject<TableElement[]>) {
+        this.dta = [];
+        subject.asObservable().subscribe(item => {
 
-        if (this.dta.length > 0) {
-            this.dta = [];
-        }
-
-        if (data.length > 0) {
-            this._header = data[0].createHeader();
-            this.dtOptions.columns = data[0].createDatatableHeader();
-            if (this._data !== undefined) {
-                this.reload();
+            if (this.dta.length === 0) {
+                this._header = item[0].createHeader();
+                this.dtOptions.columns = item[0].createDatatableHeader();
             }
-        }
-    }
 
-    @Input()
-    set reloadTrigger(observer: Subject<TableElement>) {
-        observer.subscribe(item => {
-            if (item !== null) {
-                this.dta.push(item.createDataRow(this._header));
+            if (this.dtElement.dtInstance === undefined) {
                 this.dtTrigger.next();
-                this.reload();
             }
+
+            this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                if (item !== undefined) {
+                    this.dtOptions.columns = item[0].createDatatableHeader();
+                    this.dta.splice(0, this.dta.length);
+                    dtInstance.destroy();
+                    console.log(item);
+                    item.forEach(sitem => {
+                        dtInstance.row.add(sitem.createDataRow(this._header));
+                        this.dta.push(sitem.createDataRow(this._header));
+                    });
+                }
+                console.log('stuff');
+                this.dtTrigger.next();
+            });
         });
     }
 
-    reload() {
-        if (this.dtElement.dtInstance !== undefined) {
-            this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-                dtInstance.destroy();
-                const d = [];
-                if (this._data !== undefined) {
-                    this.dta = [];
-                    this._data.forEach(item => {
-                        console.log(item);
-                        d.push(item.createDataRow(this._header));
-                    });
-                    this.dta = d;
-                    this.dtOptions.data = d;
-                }
-                this.dtTrigger.next();
-            });
-        } else {
-        }
-
-        this.dtTrigger.next();
-
-    }
 
   constructor() { }
 

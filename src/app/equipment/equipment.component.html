@@ -12,7 +12,7 @@
         <div class="col-md-8">
             <div class="table-column">
                 <button (click)="newEquipment()" class="btn btn-primary btn-block new-button"><fa name="plus"></fa> New Equipment</button>
-                <dynamic-table [reloadTrigger]="tableTrigger" class="equipment-table" (clicked)="rowClicked($event)" [data]="equipment"></dynamic-table>
+                <dynamic-table [observeData]="_tableData" class="equipment-table" (clicked)="rowClicked($event)" ></dynamic-table>
             </div>
         </div>
 

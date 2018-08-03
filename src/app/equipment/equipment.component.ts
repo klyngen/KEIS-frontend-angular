@@ -13,7 +13,6 @@ import { JsonElement } from '../httpClient/json-element';
   styleUrls: ['./equipment.component.css']
 })
 export class EquipmentComponent implements OnInit {
-    tableTrigger: Subject<any> = new Subject();
     refreshTrigger: Subject<any> = new Subject();
     equipment: Equipment[] = [];
     selected: Equipment = null;
@@ -23,6 +22,7 @@ export class EquipmentComponent implements OnInit {
     _new = false;
     _push: Equipment = null;
     _singleData: Equipment;
+    _tableData: Subject<TableElement[]> = new Subject();
 
     constructor(private httpClient: KeisAPIService) {
         this.refreshTrigger.asObservable().subscribe(item => {
@@ -38,6 +38,7 @@ export class EquipmentComponent implements OnInit {
       this.httpClient.getObserver().subscribe(data => {
           if (data.correlationId === this.equipmentFlake) {
               this.equipment = data.data;
+              this._tableData.next(data.data);
           }
 
           if (data.correlationId === this.singleEquipmentFlake) {
@@ -61,7 +62,7 @@ export class EquipmentComponent implements OnInit {
     }
 
     addElement(data) {
-        this.tableTrigger.next(new Equipment(data.data));
+        this._tableData.next(this.equipment.concat(data));
     }
 
     delete() {

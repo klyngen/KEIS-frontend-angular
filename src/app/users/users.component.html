@@ -11,11 +11,11 @@
     <div class="row">
         <div class="col-md-8">
             <button (click)="newButton()" class="btn btn-primary btn-block"><fa name="plus"></fa> New user</button>
-            <dynamic-table  [reloadTrigger]="_tableReload" (clicked)="clicked($event)" [data]="_users"></dynamic-table>
+            <dynamic-table [observeData]="_dataSubject" (clicked)="clicked($event)" ></dynamic-table>
         </div>
         <div class="col-md-4">
             <div class="user-management" [ngClass]="{'unloaded': !loaded}">
-                <add-user [newTrigger]="_addSubject" [data]="_selected"></add-user>
+                <add-user [newTrigger]="_addSubject" (newElement)="newElement()" [data]="_selected"></add-user>
                 <ng-container *ngIf="_selected">
                     <delete-user [data]="_selected" [refreshTrigger]="_refreshObserver"></delete-user>
                 </ng-container>

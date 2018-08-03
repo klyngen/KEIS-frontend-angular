@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../httpClient/user';
 import { KeisAPIService } from '../keis-api.service';
 import { Subject } from 'rxjs';
+import { TableElement } from '../httpClient/table-element';
 
 @Component({
     selector: 'users',
@@ -16,6 +17,7 @@ export class UsersComponent implements OnInit {
     _addSubject: Subject<boolean> = new Subject();
     _refreshObserver: Subject<boolean> = new Subject();
     _tableReload: Subject<boolean> = new Subject();
+    _dataSubject: Subject<TableElement[]> = new Subject();
 
     fetchFlake: string;
     loaded = false;
@@ -27,7 +29,8 @@ export class UsersComponent implements OnInit {
             if (item.correlationId === this.fetchFlake) {
                 this._users = null;
                 this._users = item.data;
-                this._tableReload.next();
+                //this._tableReload.next();
+                this._dataSubject.next(item.data);
             }
         });
 
@@ -51,6 +54,10 @@ export class UsersComponent implements OnInit {
     }
 
     test() {
+        this.httpClient.getAllUsers(this.fetchFlake);
+    }
+
+    newElement() {
         this.httpClient.getAllUsers(this.fetchFlake);
     }
 
