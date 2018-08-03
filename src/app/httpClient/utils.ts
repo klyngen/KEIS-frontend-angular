@@ -3,6 +3,7 @@ import { Equipment } from "./equipment";
 import { JsonElement } from './json-element';
 import { TableElement } from "./table-element";
 import { User } from "./user";
+import { Rent } from "./rent";
 export class Utils {
     /**
      * convert objects into a nicer format
@@ -61,7 +62,7 @@ export class Utils {
             });
             return elements;
         }
-        return new TableElement(this.object2JsonElement(data));
+        return [new TableElement(this.object2JsonElement(data))];
     }
 
 
@@ -79,5 +80,17 @@ export class Utils {
         // If only single equipment
         user.push(new User(this.object2JsonElement(data)));
         return user;
+    }
+
+    static object2Rent(data): Rent[] {
+        const elements = this.object2TableElement(data);
+        const result = [];
+        if (Array.isArray(elements)) {
+            elements.forEach(item => {
+                result.push(new Rent(item.data));
+            });
+        }
+
+        return result;
     }
 }

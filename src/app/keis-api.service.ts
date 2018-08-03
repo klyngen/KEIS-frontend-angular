@@ -199,6 +199,7 @@ export class KeisAPIService {
     }
 
 
+    // USER RELATED
     createUser(snowflake: string, data: TableElement) {
         this.postData(snowflake, '/user', data.createObject());
     }
@@ -240,4 +241,40 @@ export class KeisAPIService {
             this.alertService.addAlert(new Alert('danger', 'error fetching users', 'Error message: ' + JSON.stringify(error)));
         });
     }
+
+
+    // RENT RELATED
+    createRent(snowflake: string, data: TableElement) {
+        this.postData(snowflake, 'rent', data.createObject());
+    }
+
+    getAllRent(snowflake: string) {
+        this.httpClient.get(baseUrl + '/rent').pipe(map(item => {
+            if (!this.handleServerErrors(item)) {
+                return Utils.object2Rent(item['data']);
+            }
+        })).subscribe(item => {
+            this.notifySubjects(item, snowflake);
+        }, error => {
+            this.alertService.addAlert(new Alert('danger', 'Unable to fetch rent', 'ErrorString: ' + JSON.stringify(error)));
+        });
+    }
+
+    deliverRent(snowflake: string, rfid: string) {
+        this.postData(snowflake, '/rent/deliver', {'RFID': rfid});
+    }
+
+    getUserRent(snowflake: string, id: string) {
+        this.httpClient.get(baseUrl + '/user/activerent/' + id).pipe(map(item => {
+            if (!this.handleServerErrors(item)) {
+                return Utils.object2Rent(item['data']);
+            }
+        })).subscribe(item => {
+            this.notifySubjects(item, snowflake);
+        }, error => {
+            this.alertService.addAlert(new Alert('danger', 'Could not get user rent', 'Error' + JSON.stringify(error)));
+        });
+    }
+
+
 }
