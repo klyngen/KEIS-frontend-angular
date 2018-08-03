@@ -52,13 +52,13 @@ export class DeleteEquipmentComponent implements OnInit {
         if (this._equipment !== undefined) {
             const arr = this._equipment.getValue('instances');
             if (arr.length !== 0) {
-                this._deletable = false;
+                this._deletable = true;
                 return true;
             }
-            this._deletable = true;
+            this._deletable = false;
             return false;
         }
-        this._deletable = false;
+        this._deletable = true;
         return true;
     }
 }

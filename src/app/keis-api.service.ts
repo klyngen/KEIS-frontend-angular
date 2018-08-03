@@ -137,9 +137,10 @@ export class KeisAPIService {
         this.postData(snowflake, '/equipment', data.createObject());
     }
 
-    deleteEquipment(id: string) {
+    deleteEquipment(snowflake: string, id: string) {
         this.httpClient.delete(baseUrl + '/equipment/' + id).subscribe(item => {
             this.alertService.addAlert(new Alert('info', 'Equipment deleted', ''));
+            this.notifySubjects(true, snowflake);
         }, error => {
             this.alertService.addAlert(new Alert('danger', 'Error deleting equipment', 'Error: ' + error.error + '\n Message: ' + error.message));
         });

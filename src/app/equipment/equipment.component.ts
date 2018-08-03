@@ -19,6 +19,7 @@ export class EquipmentComponent implements OnInit {
     equipmentFlake: string;
     singleEquipmentFlake: string;
     instanceFlake: string;
+    deleteEquipmentFlake: string;
     _new = false;
     _push: Equipment = null;
     _singleData: Equipment;
@@ -35,6 +36,8 @@ export class EquipmentComponent implements OnInit {
       this.equipmentFlake = this.httpClient.snowflake();
       this.singleEquipmentFlake = this.httpClient.snowflake();
       this.instanceFlake = this.httpClient.snowflake();
+      this.deleteEquipmentFlake = this.httpClient.snowflake();
+
       this.httpClient.getObserver().subscribe(data => {
           if (data.correlationId === this.equipmentFlake) {
               this.equipment = data.data;
@@ -48,6 +51,12 @@ export class EquipmentComponent implements OnInit {
           if (data.correlationId === this.instanceFlake) {
               this._singleData.getValue('instances').push(new JsonElement(data.data.getValue('id'), data.data));
               this.httpClient.getSingleEquipment(this.singleEquipmentFlake, this.selected.getValue('id'));
+          }
+
+          if (data.correlationId === this.deleteEquipmentFlake) {
+              this.selected = null;
+              this._new = true;
+              this.httpClient.getAllEquipment(this.equipmentFlake);
           }
       });
       this.httpClient.getAllEquipment(this.equipmentFlake);
@@ -67,9 +76,7 @@ export class EquipmentComponent implements OnInit {
 
     delete() {
         if (this.selected !== undefined) {
-            this.httpClient.deleteEquipment(this.selected.getValue('id'));
-            this.httpClient.getAllEquipment(this.equipmentFlake);
-            this.refreshTrigger.next();
+            this.httpClient.deleteEquipment(this.deleteEquipmentFlake, this.selected.getValue('id'));
         }
     }
 

@@ -53,10 +53,6 @@ export class UsersComponent implements OnInit {
         this.loaded = true;
     }
 
-    test() {
-        this.httpClient.getAllUsers(this.fetchFlake);
-    }
-
     newElement() {
         this.httpClient.getAllUsers(this.fetchFlake);
     }
