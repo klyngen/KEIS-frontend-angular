@@ -207,7 +207,11 @@ export class KeisAPIService {
     }
 
     deleteUser(snowflake: string, id: string) {
-        this.httpClient.request('delete', baseUrl + '/user/' + id);
+        this.httpClient.request('delete', baseUrl + '/user/' + id).subscribe(item => {
+            if (!this.handleServerErrors(item)) {
+                this.notifySubjects(item, snowflake);
+            }
+        });
     }
 
 

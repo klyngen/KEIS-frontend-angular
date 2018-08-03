@@ -6,15 +6,20 @@
         </p>
     </div>
 </div>
+<button (click)="test()">Press</button>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-8">
             <button (click)="newButton()" class="btn btn-primary btn-block"><fa name="plus"></fa> New user</button>
-            <dynamic-table (clicked)="clicked($event)" [data]="_users"></dynamic-table>
+            <dynamic-table  [reloadTrigger]="_tableReload" (clicked)="clicked($event)" [data]="_users"></dynamic-table>
         </div>
         <div class="col-md-4">
-            <add-user [newTrigger]="_addSubject" [data]="_selected"></add-user>
-            <delete-user></delete-user>
+            <div class="user-management" [ngClass]="{'unloaded': !loaded}">
+                <add-user [newTrigger]="_addSubject" [data]="_selected"></add-user>
+                <ng-container *ngIf="_selected">
+                    <delete-user [data]="_selected" [refreshTrigger]="_refreshObserver"></delete-user>
+                </ng-container>
+            </div>
         </div>
     </div>
 </div>

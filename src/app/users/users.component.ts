@@ -14,17 +14,25 @@ export class UsersComponent implements OnInit {
     _selected: User;
 
     _addSubject: Subject<boolean> = new Subject();
+    _refreshObserver: Subject<boolean> = new Subject();
+    _tableReload: Subject<boolean> = new Subject();
 
     fetchFlake: string;
+    loaded = false;
 
     constructor(private httpClient: KeisAPIService) {
         this.fetchFlake = httpClient.snowflake();
 
         this.httpClient.getObserver().subscribe(item => {
             if (item.correlationId === this.fetchFlake) {
+                this._users = null;
                 this._users = item.data;
-                console.log(this._users);
+                this._tableReload.next();
             }
+        });
+
+        this._refreshObserver.asObservable().subscribe(item => {
+            httpClient.getAllUsers(this.fetchFlake);
         });
     }
 
@@ -34,10 +42,16 @@ export class UsersComponent implements OnInit {
 
     clicked(event) {
         this._selected = event;
+        this.loaded = true;
     }
 
     newButton() {
         this._addSubject.next();
+        this.loaded = true;
+    }
+
+    test() {
+        this.httpClient.getAllUsers(this.fetchFlake);
     }
 
 }

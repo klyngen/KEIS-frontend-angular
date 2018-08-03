@@ -1,3 +1,22 @@
-<p>
-  delete-user works!
-</p>
+<div class="user-delete side-divider">
+    <h3>Delete user</h3>
+    <button class="btn btn-danger btn-block" (click)="openModal(content)">Delete</button>
+</div>
+
+<!-- Modal code for confirmation -->
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Do you really want to do this?</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>
+            Clicking confirm will delete the user
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger btn-block" (click)="delete()">Confirm</button>
+    </div>
+</ng-template>

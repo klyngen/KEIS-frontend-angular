@@ -81,11 +81,8 @@ export class AddUserComponent implements OnInit {
         });
     }
 
-    verify(email) {
+    verify() {
         // Do the network call
-        if (!email.valid) {
-            return false;
-        }
         if (this._name.length > 0 && this._email.length > 0 && this._studentNumber.length > 0 && ((!this._userExist && this._newUser) || (!this._newUser))) {
             return true;
         }
@@ -98,20 +95,19 @@ export class AddUserComponent implements OnInit {
 
     submit() {
         if (this.verify()) {
-
             const element = new TableElement();
             element.setValuePair('name', this._name);
             element.setValuePair('email', this._email);
             element.setValuePair('studentNumber', this._studentNumber);
             if (this._newUser) {
-                this.httpClient.updateUser(this.updateFlake, this._data.getValue('id'), element);
+                this.httpClient.createUser(this.addFlake, element);
                 return;
             }
 
-            if (this._userExist) {
+            if (!this._userExist) {
+                this.httpClient.updateUser(this.updateFlake, this._data.getValue('id'), element);
                 return;
             }
-            this.httpClient.createUser(this.addFlake, element);
         }
     }
 }

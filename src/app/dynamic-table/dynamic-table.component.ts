@@ -41,13 +41,8 @@ export class DynamicTableComponent implements OnInit, AfterViewInit, OnDestroy {
         if (data.length > 0) {
             this._header = data[0].createHeader();
             this.dtOptions.columns = data[0].createDatatableHeader();
-            data.forEach(item => {
-                this.dta.push(item.createDataRow(this._header));
-            });
-            if (this.dtElement.dtInstance !== undefined) {
+            if (this._data !== undefined) {
                 this.reload();
-            } else {
-                this.dtTrigger.next();
             }
         }
     }
@@ -55,16 +50,35 @@ export class DynamicTableComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input()
     set reloadTrigger(observer: Subject<TableElement>) {
         observer.subscribe(item => {
-            this.dta.push(item.createDataRow(this._header));
-            this.reload();
+            if (item !== null) {
+                this.dta.push(item.createDataRow(this._header));
+                this.dtTrigger.next();
+                this.reload();
+            }
         });
     }
 
     reload() {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            dtInstance.destroy();
-            this.dtTrigger.next();
-        });
+        if (this.dtElement.dtInstance !== undefined) {
+            this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+                dtInstance.destroy();
+                const d = [];
+                if (this._data !== undefined) {
+                    this.dta = [];
+                    this._data.forEach(item => {
+                        console.log(item);
+                        d.push(item.createDataRow(this._header));
+                    });
+                    this.dta = d;
+                    this.dtOptions.data = d;
+                }
+                this.dtTrigger.next();
+            });
+        } else {
+        }
+
+        this.dtTrigger.next();
+
     }
 
   constructor() { }
