@@ -28,6 +28,7 @@ import { DeleteAllInstancesComponent } from './equipment/delete-all-instances/de
 import { DeleteInstanceComponent } from './equipment/delete-instance/delete-instance.component';
 import { AddUserComponent } from './users/add-user/add-user.component';
 import { DeleteUserComponent } from './users/users/delete-user/delete-user.component';
+import { UserRentComponent } from './users/user-rent/user-rent.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { DeleteUserComponent } from './users/users/delete-user/delete-user.compo
       DeleteAllInstancesComponent,
       DeleteInstanceComponent,
       AddUserComponent,
-      DeleteUserComponent
+      DeleteUserComponent,
+      UserRentComponent
   ],
   imports: [
       BrowserModule,
