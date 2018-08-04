@@ -1,4 +1,4 @@
-import { TableElement } from "./table-element";
+import { TableElement } from './table-element';
 
 export class Rent extends TableElement {
     blackList: string[] = [

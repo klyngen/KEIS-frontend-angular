@@ -245,7 +245,7 @@ export class KeisAPIService {
 
     // RENT RELATED
     createRent(snowflake: string, data: TableElement) {
-        this.postData(snowflake, 'rent', data.createObject());
+        this.postData(snowflake, '/rent', data.createObject());
     }
 
     getAllRent(snowflake: string) {

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { KeisAPIService } from '../../keis-api.service';
 import { Subject } from 'rxjs';
+import { TableElement } from '../../httpClient/table-element';
 
 @Component({
     selector: 'add-rent',
@@ -10,12 +11,15 @@ import { Subject } from 'rxjs';
 export class AddRentComponent implements OnInit {
     numberFlake: string;
     rfidFlake: string;
+    rentFlake: string;
 
     _rfid: string;
     _number: string;
 
     _verifiedRfid = false;
     _verifiedNumber = false;
+
+    _instanceId: string;
 
     _refreshTrigger: Subject<boolean>;
 
@@ -24,6 +28,7 @@ export class AddRentComponent implements OnInit {
     constructor(private httpClient: KeisAPIService) {
         this.numberFlake = httpClient.snowflake();
         this.rfidFlake = httpClient.snowflake();
+        this.rentFlake = httpClient.snowflake();
 
         httpClient.getObserver().subscribe(item => {
             if (item.correlationId === this.numberFlake) {
@@ -38,6 +43,13 @@ export class AddRentComponent implements OnInit {
             if (item.correlationId === this.rfidFlake) {
                 if (item.data[0].getValue('data') !== null) {
                     this._verifiedRfid = true;
+                    this._instanceId = item.data[0].getValue('data')[0].value;
+                }
+            }
+
+            if (item.correlationId === this.rentFlake) {
+                if (this._refreshTrigger !== undefined) {
+                    this._refreshTrigger.next();
                 }
             }
         });
@@ -50,14 +62,24 @@ export class AddRentComponent implements OnInit {
     }
 
     numberVerify(data) {
-        console.log(data);
         this._verifiedNumber = false;
         this.httpClient.userSearch(this.numberFlake, data);
     }
 
     submit() {
+        console.log(typeof this._verifiedRfid, typeof this._verifiedNumber, typeof this._instanceId, typeof this._rfid);
         if (this._verifiedNumber && this._verifiedRfid) {
             // Do stuff
+            if (this._rfid === undefined || this._instanceId === undefined) {
+                return; // break
+            }
+
+            const element = new TableElement();
+            element.setValuePair('instance', this._instanceId);
+            element.setValuePair('studentNumber', this._number);
+
+            this.httpClient.createRent(this.rentFlake, element);
+
         }
     }
 
