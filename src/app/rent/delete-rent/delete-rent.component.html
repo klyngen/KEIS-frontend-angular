@@ -8,7 +8,7 @@
 
     <div class="form-group">
         <label for="condition">Condition <span class="badge badge-primary">{{_condition}}</span></label>
-        <input [(ngModel)]="_condition" min="1" max="10" class="form-control-range" id="condition" name="condition" type="range" value=""/>
+        <input [(ngModel)]="_condition" min="1" max="10" class="form-control" id="condition" name="condition" type="range" value=""/>
     </div>
 
     <div [hidden]="!equipmentExists()" class="alert alert-warning">

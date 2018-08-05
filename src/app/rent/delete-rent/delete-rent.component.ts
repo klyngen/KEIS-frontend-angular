@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { KeisAPIService } from '../../keis-api.service';
 import { TableElement } from '../../httpClient/table-element';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'delete-rent',
@@ -9,13 +10,16 @@ import { TableElement } from '../../httpClient/table-element';
 })
 export class DeleteRentComponent implements OnInit {
   _rent: string;
-  _condition: number;
+  _condition = 5;
   _rfid = '';
 
   _dataFlake: string;
   _deliverFlake: string;
   _isRented: number;
   _verifiedRfid = false;
+  _subject: Subject<boolean>;
+
+  @Input() set refreshTrigger(subject: Subject<boolean>) {this._subject = subject; }
 
   constructor(private httpClient: KeisAPIService) {
     this._dataFlake = httpClient.snowflake();
@@ -31,8 +35,11 @@ export class DeleteRentComponent implements OnInit {
         }
 
       }
-    });
 
+      if (item.correlationId === this._deliverFlake) {
+        this.refreshTrigger.next();
+      }
+    });
    }
 
   ngOnInit() {
@@ -66,5 +73,4 @@ export class DeleteRentComponent implements OnInit {
       this.httpClient.deliverRent(this._deliverFlake, element);
     }
   }
-
 }

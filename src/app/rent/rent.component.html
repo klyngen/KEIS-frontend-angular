@@ -10,14 +10,15 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 rentData">
             <dynamic-table [observeData]="_dataSubject" (clicked)="clicked($event)" ></dynamic-table>
+            <rent-stats></rent-stats>
         </div>
 
         <div class="col-md-4">
             <div [ngClass]="{'unloaded': !loaded}">
                 <add-rent></add-rent>
-                <delete-rent></delete-rent>
+                <delete-rent [refreshTrigger]="_refreshTrigger"></delete-rent>
             </div>
         </div>
     </div>

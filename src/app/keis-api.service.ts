@@ -276,11 +276,17 @@ export class KeisAPIService {
         });
     }
 
+    getRentStatistics(snowflake: string) {
+        this.httpClient.get(baseUrl + '/stats').subscribe(item => {
+            this.notifySubjects(item, snowflake);
+        }, error => {
+            this.alertService.addAlert(
+                new Alert('warning', 'unable to fetch stats', JSON.stringify(error)));
+        });
+    }
 
     // INSTANCE FUNCTION
     getInstance(snowflake: string, id: string) {
         this.postData(snowflake, '/instance/rfid', {'RFID': id});
     }
-
-
 }

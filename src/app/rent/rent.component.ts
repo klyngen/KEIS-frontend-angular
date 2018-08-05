@@ -13,6 +13,7 @@ export class RentComponent implements OnInit {
     _dataSubject: Subject<Rent[]> = new Subject();
     rentFlake: string;
     loaded = true;
+    _refreshTrigger: Subject<boolean> = new Subject();
 
     constructor(private httpClient: KeisAPIService) {
         this.rentFlake = httpClient.snowflake();
@@ -23,6 +24,10 @@ export class RentComponent implements OnInit {
                 console.log(item.data);
                 this._dataSubject.next(item.data);
             }
+        });
+
+        this._refreshTrigger.asObservable().subscribe(item => {
+            httpClient.getAllRent(this.rentFlake);
         });
     }
 

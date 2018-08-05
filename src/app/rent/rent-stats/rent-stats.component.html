@@ -1,3 +1,9 @@
-<p>
-  rent-stats works!
-</p>
+<div class="rent-stats">
+  <h3>Rent statistics</h3>
+  <ngx-charts-pie-chart
+    [view]="[_size, _size]"
+    [results]="_data"
+    [legend]="true">
+
+  </ngx-charts-pie-chart>
+</div>
