@@ -19,6 +19,8 @@ export class AddRentComponent implements OnInit {
     _verifiedRfid = false;
     _verifiedNumber = false;
 
+    _isRented = false;
+
     _instanceId: string;
 
     _refreshTrigger: Subject<boolean>;
@@ -42,6 +44,7 @@ export class AddRentComponent implements OnInit {
 
             if (item.correlationId === this.rfidFlake) {
                 if (item.data[0].getValue('data') !== null) {
+                    this._isRented = item.data[0].getValue('data')[5].value;
                     this._verifiedRfid = true;
                     this._instanceId = item.data[0].getValue('data')[0].value;
                 }
@@ -84,7 +87,7 @@ export class AddRentComponent implements OnInit {
     }
 
     verified() {
-        if (this._verifiedRfid && this._verifiedNumber) {
+        if (this._verifiedRfid && this._verifiedNumber && !this._isRented) {
             return true;
         }
         return false;

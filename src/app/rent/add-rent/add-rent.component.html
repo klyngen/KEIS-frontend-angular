@@ -18,5 +18,10 @@
     <div [hidden]="_verifiedNumber || !_number" class="alert alert-warning">
         <b>Warning: </b> field must be an existing user id. The given user does not exist in KEIS.
     </div>
+
+    <div [hidden]="_isRented" class="alert alert-warning">
+        <b>Already rented:</b> The magic leprechauns in the pc says the equipment is already rented to someone.
+        Please deliver the equipment before proceeding.
+    </div>
     <button [disabled]="!verified()" (click)="submit()" class="btn btn-primary btn-block"><fa name="floppy-o"></fa> Submit</button>
 </div>

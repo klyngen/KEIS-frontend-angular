@@ -30,17 +30,21 @@ export class TableElement implements ITableElement {
      * Creates the header row for a table
      * NB: SHOULD BE A RECURCIVE FUNCTION
      */
-    createHeader(): string[] {
-        const header: string[] = [];
-        this.data.sort((n1, n2) => {
+    createHeader(array?: any[]): string[] {
+        const dta = array !== undefined? array : this.data;
+        let header: string[] = [];
+        dta.sort((n1, n2) => {
             const priority1 = this.priority[n1.key] === undefined ? 100 : this.priority[n1.key];
             const priority2 = this.priority[n2.key] === undefined ? 100 : this.priority[n2.key];
             return priority1 - priority2;
         });
 
-        this.data.forEach(item => {
+        dta.forEach(item => {
+            if (Array.isArray(item.value)) {
+                header = header.concat(this.createHeader(item.value));
+            }
             if (!this.isBlackListed(item.key)) {
-
+                
                 // See if there is a mapping
                 const alternative = this.nameMapping[item.key];
 
@@ -69,15 +73,9 @@ export class TableElement implements ITableElement {
 
     createDataRow(header: string[]): any[] {
         const data: any[] = [];
-
         header.forEach(item => {
             const head = this.fetchKey(item);
-            this.data.forEach(subItem => {
-                if (head === subItem.key) {
-                    data.push(subItem.value);
-                    return; // Break
-                }
-            });
+            data.push(this.getValue(head));
         });
         return data;
     }
@@ -95,10 +93,21 @@ export class TableElement implements ITableElement {
         });
     }
 
-    getValue(key: string): any {
+    getValue(key: string, data?: any[]): any {
+
+        const dta = data !== undefined? data: this.data;
+
         const resKey = this.fetchKey(key);
         let res = null;
-        this.data.forEach(item => {
+        dta.forEach(item => {
+            if (Array.isArray(item.value)) {
+                console.log(item.value);
+                res = this.getValue(key, item.value);
+                if (res !== null) {
+                    return;
+                }
+            }
+
             if (item.key === resKey) {
                 res = item.value;
                 return;

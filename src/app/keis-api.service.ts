@@ -113,7 +113,7 @@ export class KeisAPIService {
                 new Alert('danger',
                           'unable to post data to ' + baseUrl + uri,
                           'the keis backend might not be running \n Backend reply: '
-                          + error.message + '\n KEIS-reply: ' + error.error['error']));
+                          + JSON.stringify(error)));
         });
     }
 
@@ -142,7 +142,7 @@ export class KeisAPIService {
             this.alertService.addAlert(new Alert('info', 'Equipment deleted', ''));
             this.notifySubjects(true, snowflake);
         }, error => {
-            this.alertService.addAlert(new Alert('danger', 'Error deleting equipment', 'Error: ' + error.error + '\n Message: ' + error.message));
+            this.alertService.addAlert(new Alert('danger', 'Error deleting equipment', 'Error: ' + JSON.stringify(error)));
         });
     }
 
@@ -150,7 +150,7 @@ export class KeisAPIService {
         this.httpClient.request('delete', baseUrl + '/instance', {body: {'RFID': rfid}}).subscribe(item => {
             this.notifySubjects(true, snowflake);
         }, error => {
-            this.alertService.addAlert(new Alert('danger', 'Could not delete instance', 'Error: ' + error.error + '\n Message: ' + error.message));
+            this.alertService.addAlert(new Alert('danger', 'Could not delete instance', 'Error: ' + JSON.stringify(error)));
         });
     }
 
