@@ -20,7 +20,7 @@ export class RentComponent implements OnInit {
         httpClient.getObserver().subscribe(item => {
             if (item.correlationId === this.rentFlake) {
 
-                console.log(item);
+                console.log(item.data);
                 this._dataSubject.next(item.data);
             }
         });

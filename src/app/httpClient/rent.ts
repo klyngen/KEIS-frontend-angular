@@ -23,5 +23,12 @@ export class Rent extends TableElement {
 
     constructor(data?) {
         super(data);
+        this.nameMapping['model'] = 'Model';
+        this.nameMapping['brands'] = 'Brand';
+        this.nameMapping['types'] = 'Type';
+        this.nameMapping['condition'] = 'Condition';
+        this.nameMapping['name'] = 'Name';
+        this.nameMapping['studentNumber'] = 'Studentnumber';
+        this.nameMapping['email'] = 'Email';
     }
 }

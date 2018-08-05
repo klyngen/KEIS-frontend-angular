@@ -44,7 +44,6 @@ export class TableElement implements ITableElement {
                 header = header.concat(this.createHeader(item.value));
             }
             if (!this.isBlackListed(item.key)) {
-                
                 // See if there is a mapping
                 const alternative = this.nameMapping[item.key];
 
@@ -75,7 +74,8 @@ export class TableElement implements ITableElement {
         const data: any[] = [];
         header.forEach(item => {
             const head = this.fetchKey(item);
-            data.push(this.getValue(head));
+            const res = this.getValue(head);
+            data.push(res);
         });
         return data;
     }
@@ -95,20 +95,20 @@ export class TableElement implements ITableElement {
 
     getValue(key: string, data?: any[]): any {
 
-        const dta = data !== undefined? data: this.data;
+        const dta = data !== undefined ? data : this.data;
 
         const resKey = this.fetchKey(key);
         let res = null;
         dta.forEach(item => {
             if (Array.isArray(item.value)) {
-                console.log(item.value);
-                res = this.getValue(key, item.value);
-                if (res !== null) {
+                const temp = this.getValue(key, item.value);
+                if (temp !== null) {
+                    res = temp;
                     return;
                 }
             }
 
-            if (item.key === resKey) {
+            if ((item.key === resKey) && (res === null)) {
                 res = item.value;
                 return;
             }

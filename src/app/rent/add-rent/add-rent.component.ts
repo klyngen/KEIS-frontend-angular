@@ -21,7 +21,6 @@ export class AddRentComponent implements OnInit {
 
     _isRented = false;
 
-    
     _instanceId: string;
 
     _refreshTrigger: Subject<boolean>;

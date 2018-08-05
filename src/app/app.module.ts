@@ -31,6 +31,7 @@ import { DeleteUserComponent } from './users/users/delete-user/delete-user.compo
 import { UserRentComponent } from './users/user-rent/user-rent.component';
 import { AddRentComponent } from './rent/add-rent/add-rent.component';
 import { DeleteRentComponent } from './rent/delete-rent/delete-rent.component';
+import { RentStatsComponent } from './rent/rent-stats/rent-stats.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { DeleteRentComponent } from './rent/delete-rent/delete-rent.component';
       DeleteUserComponent,
       UserRentComponent,
       AddRentComponent,
-      DeleteRentComponent
+      DeleteRentComponent,
+      RentStatsComponent
   ],
   imports: [
       BrowserModule,

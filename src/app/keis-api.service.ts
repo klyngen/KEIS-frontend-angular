@@ -260,8 +260,8 @@ export class KeisAPIService {
         });
     }
 
-    deliverRent(snowflake: string, rfid: string) {
-        this.postData(snowflake, '/rent/deliver', {'RFID': rfid});
+    deliverRent(snowflake: string, data: TableElement) {
+        this.postData(snowflake, '/rent/deliver', data.createObject());
     }
 
     getUserRent(snowflake: string, id: string) {

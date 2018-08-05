@@ -1,3 +1,23 @@
-<p>
-  delete-rent works!
-</p>
+<div class="deliver-rent side-divider">
+  <h3>Deliver rent</h3>
+  <div class="form-group">
+    <label>RFID</label>
+    <input (keyup)="verifyRfid(rfid.model)" required #rfid="ngModel" [(ngModel)]="_rfid" class="form-control" type="text">
+  </div>
+
+
+    <div class="form-group">
+        <label for="condition">Condition <span class="badge badge-primary">{{_condition}}</span></label>
+        <input [(ngModel)]="_condition" min="1" max="10" class="form-control-range" id="condition" name="condition" type="range" value=""/>
+    </div>
+
+    <div [hidden]="!equipmentExists()" class="alert alert-warning">
+      <b>Cannot find the RFID:</b> I do not think this equipment exists.
+    </div>
+
+    <div [hidden]="rented()" class="alert alert-warning">
+      <b>Not rented: </b> this equipment is not rented to anyone.
+    </div>
+
+    <button [disabled]="!verify()" (click)="submit()" class="btn btn-primary btn-block">Submit</button>
+</div>
