@@ -17,6 +17,7 @@ export class UserRentComponent implements OnInit {
         this._user = user;
 
         if (this._user !== undefined) {
+            console.log(this._user.getValue('id'));
             this.httpClient.getUserRent(this.rentFlake, this._user.getValue('id'));
         }
     }
@@ -27,7 +28,7 @@ export class UserRentComponent implements OnInit {
         httpClient.getObserver().subscribe(item => {
             if (item.correlationId === this.rentFlake) {
                 console.log(item.data);
-                this._data = item;
+                this._data = item.data;
             }
         });
     }

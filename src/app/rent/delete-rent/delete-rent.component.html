@@ -11,7 +11,7 @@
         <input [(ngModel)]="_condition" min="1" max="10" class="form-control" id="condition" name="condition" type="range" value=""/>
     </div>
 
-    <div [hidden]="!equipmentExists()" class="alert alert-warning">
+    <div [hidden]="equipmentExists()" class="alert alert-warning">
       <b>Cannot find the RFID:</b> I do not think this equipment exists.
     </div>
 

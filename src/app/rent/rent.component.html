@@ -17,7 +17,7 @@
 
         <div class="col-md-4">
             <div [ngClass]="{'unloaded': !loaded}">
-                <add-rent></add-rent>
+                <add-rent [refreshTrigger]="_refreshTrigger"></add-rent>
                 <delete-rent [refreshTrigger]="_refreshTrigger"></delete-rent>
             </div>
         </div>

@@ -32,12 +32,15 @@ export class DeleteRentComponent implements OnInit {
                     this._verifiedRfid = true;
                     this._condition = item.data[0].getValue('data')[1].value;
                     console.log(item.data[0].getValue('data'));
+        } else {
+          this._verifiedRfid = false;
         }
 
       }
 
       if (item.correlationId === this._deliverFlake) {
-        this.refreshTrigger.next();
+
+        this._subject.next();
       }
     });
    }
@@ -51,18 +54,16 @@ export class DeleteRentComponent implements OnInit {
   }
 
   equipmentExists() {
-    if (this._rfid.length > 0 && this._verifiedRfid) {
-      return false;
-    }
-    return true;
+    console.log(this._rfid, this._verifiedRfid);
+    return (this._rfid.length > 0 && this._verifiedRfid);
   }
 
   rented() {
-    return (this._isRented !== 0 && this._rfid.length !== 0);
+    return (this._isRented > 0 && this._rfid.length > 0);
   }
 
   verify() {
-    return (this.rented() && this.equipmentExists);
+    return (this.rented() && !this.equipmentExists);
   }
 
   submit() {

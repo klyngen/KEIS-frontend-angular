@@ -22,12 +22,15 @@ export class RentComponent implements OnInit {
             if (item.correlationId === this.rentFlake) {
 
                 console.log(item.data);
-                this._dataSubject.next(item.data);
+                if (item.data) {
+                    this._dataSubject.next(item.data);
+                }
             }
         });
 
         this._refreshTrigger.asObservable().subscribe(item => {
             httpClient.getAllRent(this.rentFlake);
+            console.log("yay");
         });
     }
 

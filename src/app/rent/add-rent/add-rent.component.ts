@@ -13,8 +13,8 @@ export class AddRentComponent implements OnInit {
     rfidFlake: string;
     rentFlake: string;
 
-    _rfid: string;
-    _number: string;
+    _rfid = '';
+    _number = '';
 
     _verifiedRfid = false;
     _verifiedNumber = false;
@@ -51,13 +51,21 @@ export class AddRentComponent implements OnInit {
             }
 
             if (item.correlationId === this.rentFlake) {
+                console.log("sdkjfsdnjfk");
                 if (this._refreshTrigger !== undefined) {
                     this._refreshTrigger.next();
                 }
             }
+            console.log('rentflake', this.rentFlake);
+            console.log('rfidFlake', this.rfidFlake);
+            console.log('numberFlake', this.numberFlake);
+            console.log(item);
         });
     }
 
+    verRented() {
+        return (this._isRented && this._rfid.length > 0);
+    }
 
     rfidVerify(data) {
         this._verifiedRfid = false;

@@ -289,4 +289,48 @@ export class KeisAPIService {
     getInstance(snowflake: string, id: string) {
         this.postData(snowflake, '/instance/rfid', {'RFID': id});
     }
+
+
+
+    // TIME LOGG FUNCTIONALITY
+    /**
+     * Gets one logentry. Usefull for verifying entries
+     * @param snowflake - the flakes
+     * @param id - id of the logentry
+     */
+    getLogEntry(snowflake: string, id: string) {
+        this.httpClient.get(baseUrl + '/timeLog/' + id).pipe(map (item => {
+            if (!this.handleServerErrors(item)) {
+                return Utils.object2TableElement(item['data']);
+            }
+        })).subscribe(item => {
+            this.notifySubjects(item, snowflake);
+        }, error => {
+            this.alertService.addAlert(
+                new Alert('danger', 'Cannot verify timelog', JSON.stringify(error))
+            );
+        });
+    }
+
+    /**
+     * Creates a logentry with thebasic post function
+     * @param snowflake - flaky flake
+     * @param rfid - string
+     */
+    createLogEntry(snowflake: string, rfid: string) {
+        this.postData(snowflake, '/timeLog', {'rfid': rfid});
+    }
+
+    /**
+     * Updates logEntries
+     * @param snowflake - the flaka
+     * @param data - TableElement
+     */
+    updateLogEntry(snowflake: string, data: TableElement) {
+        this.putData(snowflake, '/timeLog', data.createObject());
+    }
+
+
 }
+
+

@@ -2,5 +2,10 @@
     <h3>User active rent</h3>
 
     <!-- Loop some shit -->
+    <ul class="list-group">
+        <li *ngFor="let item of _data" class="list-group-item">
+            <b>{{item.getValue('brands')}}</b> {{item.getValue('model')}}
+        </li>
+    </ul>
 </div>
 
