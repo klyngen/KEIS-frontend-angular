@@ -1,3 +1,46 @@
-<p>
-  timelog works!
-</p>
+<div class="timelog">
+  <h3>Time to logg some time</h3>
+
+  <button (click)="openModal(checkin, '#openField')"  class="btn btn-success btn-block">Check in</button>
+  <button (click)="openModal(checkout, '#closeField')" class="btn btn-danger btn-block">Check out</button>
+
+  <div class="form-group">
+    <label>RFID from student card</label>
+    <input (keyup)="verifyRFID(rfid.model)" #rfid="ngModel" [(ngModel)]="_rfid" type="text" class="form-control">
+  </div>
+</div>
+
+
+    <ng-template #checkin let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Swipe card to check in</h4>
+
+
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          <img style="width:60%; margin: 10px;" class="mx-auto d-block" src="assets/nfc.png" alt="">
+        </div>
+        <div class="modal-footer">
+            <input [(ngModel)]="_rfid" (keyup)="checkInPress()" id="openField"  type="text" class="form-control">
+        </div>
+    </ng-template>
+    
+
+
+    <ng-template #checkout let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Swipe card to check out</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          <img style="width:60%; margin: 10px;" class="mx-auto d-block" src="assets/nfc.png" alt="">
+        </div>
+        <div class="modal-footer">
+            <input [(ngModel)]="_rfid" (keyup)="checkOutPress()" id="closeField" type="text" class="form-control">
+        </div>
+    </ng-template>

@@ -25,6 +25,11 @@
         <input name="name" [(ngModel)]="_name" #name="ngModel" required class="form-control" type="text" value=""/>
     </div>
 
+    <div class="form-group">
+        <label for="">RFID(optional)</label>
+        <input #studentRFID="ngModel" [(ngModel)]="_studentRfid" type="text" class="form-control">
+    </div>
+
     <div [hidden]="verify()" class="alert alert-info">
         <b>Info</b> all fields has to be filled to be able to submit
     </div>

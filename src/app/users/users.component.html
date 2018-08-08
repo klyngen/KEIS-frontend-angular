@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-4">
             <div class="user-management" [ngClass]="{'unloaded': !loaded}">
-                <add-user [newTrigger]="_addSubject" (newElement)="newElement()" [data]="_selected"></add-user>
+                <add-user [updateTrigger]="_refreshObserver" [newTrigger]="_addSubject" (newElement)="newElement()" [data]="_selected"></add-user>
                 <ng-container *ngIf="_selected">
                     <delete-user [data]="_selected" [refreshTrigger]="_refreshObserver"></delete-user>
                     <user-rent [user]="_selected"></user-rent>

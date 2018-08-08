@@ -17,6 +17,7 @@ export class AddUserComponent implements OnInit {
 
     // User data
     _studentNumber = '';
+    _studentRfid = '';
     _email = '';
     _name = '';
 
@@ -24,6 +25,7 @@ export class AddUserComponent implements OnInit {
     _loaded = false;
     _userExist = false;
 
+    _updateTrigger: Subject<boolean>;
 
     _data: TableElement;
 
@@ -42,6 +44,8 @@ export class AddUserComponent implements OnInit {
         }
         this._loaded = false;
     }
+
+    @Input() set updateTrigger(subject: Subject<boolean>) {this._updateTrigger = subject; }
 
     @Input()
     set newTrigger(subject: Subject<boolean>) {
@@ -63,8 +67,14 @@ export class AddUserComponent implements OnInit {
     ngOnInit() {
         this.httpClient.getObserver().subscribe(item => {
             if (item.correlationId === this.addFlake) {
-                this.newElement.emit(item.data);
+                //this.newElement.emit(item.data);
+                if (this._updateTrigger) {
+                    this._updateTrigger.next();
+                }
             } else if (item.correlationId === this.updateFlake) {
+                if (this._updateTrigger) {
+                    this._updateTrigger.next();
+                }
             } else if (item.correlationId === this.searchFlake) {
                 if (item.data.length > 0) {
                     this._userExist = false;
@@ -99,6 +109,11 @@ export class AddUserComponent implements OnInit {
             element.setValuePair('name', this._name);
             element.setValuePair('email', this._email);
             element.setValuePair('studentNumber', this._studentNumber);
+
+            if (this._studentRfid.length > 0) {
+                element.setValuePair('rfid', this._studentRfid);
+            }
+
             if (this._newUser) {
                 this.httpClient.createUser(this.addFlake, element);
                 return;
