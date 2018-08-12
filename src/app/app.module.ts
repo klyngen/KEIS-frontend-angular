@@ -34,6 +34,7 @@ import { DeleteRentComponent } from './rent/delete-rent/delete-rent.component';
 import { RentStatsComponent } from './rent/rent-stats/rent-stats.component';
 import { TimelogComponent } from './timelog/timelog.component';
 import { StatsComponent } from './timelog/stats/stats.component';
+import { EndTimeDirective } from './timelog/end-time.directive';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { StatsComponent } from './timelog/stats/stats.component';
       DeleteRentComponent,
       RentStatsComponent,
       TimelogComponent,
-      StatsComponent
+      StatsComponent,
+      EndTimeDirective
   ],
   imports: [
       BrowserModule,

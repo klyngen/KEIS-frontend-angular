@@ -5,7 +5,7 @@ export class TableElement implements ITableElement {
     data: JsonElement[] = [];
     nameMapping: {[key: string]: string} = {};
     priority: {[key: string]: number} = {};
-    blackList: string[] = ['success', 'error'];
+    blackList: string[] = ['success'];
 
     constructor(data?: JsonElement[]) {
         this.data = data === undefined ? [] : data;

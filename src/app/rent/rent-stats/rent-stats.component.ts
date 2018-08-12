@@ -22,7 +22,7 @@ export class RentStatsComponent implements OnInit {
           temp.push({name: key.charAt(0).toUpperCase()+key.slice(1), value: item.data[key] });
         }
         this._data = temp;
-        console.log(this._data);
+
       }
     });
    }

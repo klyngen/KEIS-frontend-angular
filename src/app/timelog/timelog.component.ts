@@ -1,20 +1,29 @@
-import { i1 } from '@angular/core/src/render3';
-import { Component, OnInit } from '@angular/core';
+import { i1} from '@angular/core/src/render3';
+import { Component, OnInit, ViewChild, TemplateRef, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
 import { KeisAPIService } from '../keis-api.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { EndTimeDirective } from './end-time.directive';
 
 @Component({
   selector: 'timelog',
   templateUrl: './timelog.component.html',
   styleUrls: ['./timelog.component.css']
 })
-export class TimelogComponent implements OnInit {
+export class TimelogComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('timePlate')
+  private timeTemplateRef: TemplateRef<any>;
+
+  @ViewChildren(EndTimeDirective)
+  private queryList: QueryList<EndTimeDirective>;
 
   confirmFlake: string;
   updateFlake: string;
   createFlake: string;
   reference: NgbModalRef;
   _rfid: string;
+  _checkedIn = false;
+  _alreadyChecked = false;
 
   waiting = false;
 
@@ -26,8 +35,22 @@ export class TimelogComponent implements OnInit {
     httpClient.getObserver().subscribe(item => {
       switch (item.correlationId) {
         case this.createFlake:
+          if (item.data[0].getValue('success') === 'true') {
+            // The check in was successfull
+            this._checkedIn = true;
+            setTimeout(() => {
+              // Reset the status
+              this._checkedIn = false;
 
-          console.log(item.data);
+              // Close the modal
+              this.reference.close();
+            }, 1000);
+
+          } else if (item.data[0].getValue('success') === 'false') {
+            // Already checked in
+            this._alreadyChecked = true;
+
+          }
         break;
 
         case this.confirmFlake:
@@ -48,6 +71,12 @@ export class TimelogComponent implements OnInit {
    }
 
   ngOnInit() {
+    
+  }
+
+  ngAfterViewInit() {
+    this.queryList.map(timeLogger => 
+      timeLogger.viewContainerRef.createEmbeddedView(this.timeTemplateRef));
   }
 
   checkIn() {

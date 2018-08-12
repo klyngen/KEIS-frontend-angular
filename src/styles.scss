@@ -5,6 +5,10 @@
 .jumbotron.jumbotron-fluid.titletron {
   padding-top: 22px;
   padding-bottom: 22px;
+  background-repeat: repeat-x;
+  background-image: url('assets/tealdrop.svg');
+  background-size: 100%;
+  color: white;
 }
 
 
@@ -24,3 +28,9 @@
     filter: blur(5px);
     background-color: #ccc;
 }
+
+/* Add background static */
+body {
+    background: url('assets/static.svg');
+}
+

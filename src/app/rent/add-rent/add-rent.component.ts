@@ -51,15 +51,10 @@ export class AddRentComponent implements OnInit {
             }
 
             if (item.correlationId === this.rentFlake) {
-                console.log("sdkjfsdnjfk");
                 if (this._refreshTrigger !== undefined) {
                     this._refreshTrigger.next();
                 }
             }
-            console.log('rentflake', this.rentFlake);
-            console.log('rfidFlake', this.rfidFlake);
-            console.log('numberFlake', this.numberFlake);
-            console.log(item);
         });
     }
 
@@ -78,7 +73,6 @@ export class AddRentComponent implements OnInit {
     }
 
     submit() {
-        console.log(typeof this._verifiedRfid, typeof this._verifiedNumber, typeof this._instanceId, typeof this._rfid);
         if (this._verifiedNumber && this._verifiedRfid) {
             // Do stuff
             if (this._rfid === undefined || this._instanceId === undefined) {

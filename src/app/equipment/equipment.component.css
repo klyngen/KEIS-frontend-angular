@@ -9,3 +9,7 @@
     border-left-width: 2px;
     border-color: rgba(0, 0, 0, 0.6);
 }
+
+.jumbotron.jumbotron-fluid.titletron {
+    background-image: url('../../assets/bluedrop.svg');
+}

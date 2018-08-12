@@ -4,10 +4,7 @@
   <button (click)="openModal(checkin, '#openField')"  class="btn btn-success btn-block">Check in</button>
   <button (click)="openModal(checkout, '#closeField')" class="btn btn-danger btn-block">Check out</button>
 
-  <div class="form-group">
-    <label>RFID from student card</label>
-    <input (keyup)="verifyRFID(rfid.model)" #rfid="ngModel" [(ngModel)]="_rfid" type="text" class="form-control">
-  </div>
+
 </div>
 
 
@@ -21,13 +18,23 @@
             </button>
         </div>
         <div class="modal-body">
-          <img style="width:60%; margin: 10px;" class="mx-auto d-block" src="assets/nfc.png" alt="">
+          <img [hidden]="_checkedIn" style="width:60%; margin: 10px;" class="mx-auto d-block" src="assets/nfc.png" alt="">
+          <h1 [hidden]="!_checkedIn" style="text-align: center"> <fa name="chceck"></fa></h1>
+          <h1 [hidden]="!_checkedIn" style="text-align: center"> Checked inn successfully </h1>
+
+          <div endTime></div>
+
+          <ng-template *ngIf="true" #timePlate>
+            <h3>YAY</h3>
+        </ng-template>
         </div>
+
         <div class="modal-footer">
             <input [(ngModel)]="_rfid" (keyup)="checkInPress()" id="openField"  type="text" class="form-control">
         </div>
     </ng-template>
     
+  
 
 
     <ng-template #checkout let-c="close" let-d="dismiss">

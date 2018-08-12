@@ -31,7 +31,6 @@ export class DeleteRentComponent implements OnInit {
                     this._isRented = item.data[0].getValue('data')[5].value;
                     this._verifiedRfid = true;
                     this._condition = item.data[0].getValue('data')[1].value;
-                    console.log(item.data[0].getValue('data'));
         } else {
           this._verifiedRfid = false;
         }
@@ -54,7 +53,6 @@ export class DeleteRentComponent implements OnInit {
   }
 
   equipmentExists() {
-    console.log(this._rfid, this._verifiedRfid);
     return (this._rfid.length > 0 && this._verifiedRfid);
   }
 
