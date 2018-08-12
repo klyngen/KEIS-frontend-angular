@@ -1,0 +1,13 @@
+.btn-group.big-group {
+    width: 100%;
+}
+
+.btn.big-btn {
+    width: 50%;
+    height: 150px;
+}
+
+.timelog {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}

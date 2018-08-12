@@ -4,6 +4,7 @@ import { JsonElement } from './json-element';
 import { TableElement } from "./table-element";
 import { User } from "./user";
 import { Rent } from "./rent";
+import { TimeLog } from "./time-log";
 export class Utils {
     /**
      * convert objects into a nicer format
@@ -88,6 +89,18 @@ export class Utils {
         if (Array.isArray(elements)) {
             elements.forEach(item => {
                 result.push(new Rent(item.data));
+            });
+        }
+
+        return result;
+    }
+
+    static object2Timelog(data): TimeLog[] {
+        const elements = this.object2TableElement(data);
+        const result = [];
+        if (Array.isArray(elements)) {
+            elements.forEach(item => {
+                result.push(new TimeLog(item.data));
             });
         }
 

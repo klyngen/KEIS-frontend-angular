@@ -1,8 +1,11 @@
 <div class="timelog">
   <h3>Time to logg some time</h3>
-
-  <button (click)="openModal(checkin, '#openField')"  class="btn btn-success btn-block">Check in</button>
-  <button (click)="openModal(checkout, '#closeField')" class="btn btn-danger btn-block">Check out</button>
+    <div class="btn-group big-group">
+        <button (click)="openModal(checkin, '#openField')"  class="btn
+                         btn-outline-success btn-lg big-btn"> <h3> <fa name="sign-in"></fa> Check in</h3> </button>
+        <button (click)="openModal(checkout, '#closeField')" class="btn
+                         btn-outline-danger btn-lg big-btn"><h3> <fa name="sign-out"></fa> Check out</h3></button>
+    </div>
 
 
 </div>
@@ -13,20 +16,17 @@
             <h4 class="modal-title" id="modal-basic-title">Swipe card to check in</h4>
 
 
-            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click'); closedModal()">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
           <img [hidden]="_checkedIn" style="width:60%; margin: 10px;" class="mx-auto d-block" src="assets/nfc.png" alt="">
           <h1 [hidden]="!_checkedIn" style="text-align: center"> <fa name="chceck"></fa></h1>
-          <h1 [hidden]="!_checkedIn" style="text-align: center"> Checked inn successfully </h1>
-
+          <div class="alert alert-success" [hidden]="!_checkedIn" style="text-align: center"> Checked inn successfully </div>
+            <div class="alert alert-danger" [hidden]="!_alreadyChecked"> <b>Danger:</b> Already checked in. Please check out first</div>
           <div endTime></div>
 
-          <ng-template *ngIf="true" #timePlate>
-            <h3>YAY</h3>
-        </ng-template>
         </div>
 
         <div class="modal-footer">
@@ -40,14 +40,26 @@
     <ng-template #checkout let-c="close" let-d="dismiss">
         <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">Swipe card to check out</h4>
-            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click'); closedModal()">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-          <img style="width:60%; margin: 10px;" class="mx-auto d-block" src="assets/nfc.png" alt="">
+            <div [hidden]="_overClock">
+                <img style="width:60%; margin: 10px;" class="mx-auto d-block" src="assets/nfc.png" alt="">
+            </div>
+
+            <div [hidden]="!_overClock">
+                <div class="alert alert-info">
+                    <b>Info:</b> I suspect you forgot to log out some time ago. Please tell me when you left the lab
+                </div>
+            <owl-date-time-inline class="mx-auto" [(ngModel)]="_date" #dt></owl-date-time-inline>
+            </div>
         </div>
+
+
         <div class="modal-footer">
             <input [(ngModel)]="_rfid" (keyup)="checkOutPress()" id="closeField" type="text" class="form-control">
+            <button (click)="postWithTime()" [hidden]="!_overClock" class="btn btn-primary btn-block">Submit</button>
         </div>
     </ng-template>

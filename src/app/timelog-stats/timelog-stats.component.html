@@ -1,0 +1,30 @@
+
+<div class="jumbotron jumbotron-fluid titletron">
+    <div class="container">
+        <h1 class="display-4"><fa name="table"></fa> Time reports</h1>
+        <p class="lead">
+            Create and export time reports
+        </p>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <h3>Choose you timespan</h3>
+
+        <div class="form-group">
+            <label for="">From</label>
+            <input (change)="verify()" [(ngModel)]="_from" class="form-control" name="" type="date" value=""/>
+        </div>
+
+
+        <div class="form-group">
+            <label for="">To</label>
+            <input (change)="verify()" [(ngModel)]="_to" class="form-control" name="" type="date" value=""/>
+        </div>
+
+
+    <hr/>
+
+    <dynamic-table [observeData]="_tableData"></dynamic-table>
+</div>
+

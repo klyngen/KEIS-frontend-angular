@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, TemplateRef, ViewChildren, AfterViewInit,
 import { KeisAPIService } from '../keis-api.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EndTimeDirective } from './end-time.directive';
+import { TableElement } from '../httpClient/table-element';
 
 @Component({
   selector: 'timelog',
@@ -24,6 +25,8 @@ export class TimelogComponent implements OnInit, AfterViewInit {
   _rfid: string;
   _checkedIn = false;
   _alreadyChecked = false;
+  _overClock = false;
+  _date: string = null;
 
   waiting = false;
 
@@ -41,15 +44,17 @@ export class TimelogComponent implements OnInit, AfterViewInit {
             setTimeout(() => {
               // Reset the status
               this._checkedIn = false;
+              this._alreadyChecked = false;
 
               // Close the modal
               this.reference.close();
+              this._rfid = '';
             }, 1000);
 
           } else if (item.data[0].getValue('success') === 'false') {
             // Already checked in
             this._alreadyChecked = true;
-
+            this._overClock = true;
           }
         break;
 
@@ -60,6 +65,22 @@ export class TimelogComponent implements OnInit, AfterViewInit {
 
         case this.updateFlake:
           console.log(item.data);
+          const error = item.data.error;
+
+          if (error !== null) {
+            if (error === "false") {
+              this._overClock = true;
+              return;
+            } else {
+            }
+          } else {
+            this._overClock = false;
+            this.reference.close();
+            this._rfid = '';
+            this._date = null;
+          }
+            this._rfid = '';
+            this.reference.close();
         break;
         
         default:
@@ -75,7 +96,7 @@ export class TimelogComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.queryList.map(timeLogger => 
+    this.queryList.map(timeLogger =>
       timeLogger.viewContainerRef.createEmbeddedView(this.timeTemplateRef));
   }
 
@@ -83,17 +104,30 @@ export class TimelogComponent implements OnInit, AfterViewInit {
 
   }
 
+  postWithTime() {
+
+      this._overClock = false;
+      this.waiting = false;
+
+      const element = new TableElement();
+      element.setValuePair('stop', this._date);
+      console.log(this._date);
+      element.setValuePair('rfid', this._rfid);
+      this.httpClient.updateLogEntry(this.updateFlake, element);
+  }
 
   waitAndCheckOut() {
     this.waiting = true;
-    setTimeout(function () {
-      this.httpClient.updateLogEntry(this.updateFlake, this._rfid);
+    setTimeout(() => {
+      console.log('checkout function runned');
+      const element = new TableElement();
+      element.setValuePair('rfid', this._rfid);
+      this.httpClient.updateLogEntry(this.updateFlake, element);
       this.waiting = false;
    }, 1000);
   }
 
   press() {
-    console.log("sdfdsf");
   }
 
   private funcyFunc() {
@@ -101,6 +135,7 @@ export class TimelogComponent implements OnInit, AfterViewInit {
   }
 
   waitAndCheckIn() {
+    this.waiting = true;
     setTimeout(() => {
       this.httpClient.createLogEntry(this.createFlake, this._rfid);
       this.waiting = false;
@@ -127,6 +162,11 @@ export class TimelogComponent implements OnInit, AfterViewInit {
 
   verifyRFID(data) {
     this.httpClient.getLogEntry(this.confirmFlake, this._rfid);
+  }
+
+  closedModal() {
+    this._rfid = '';
+    this._date = null;
   }
 
 }

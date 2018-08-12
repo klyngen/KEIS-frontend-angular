@@ -103,7 +103,7 @@ export class KeisAPIService {
     private postData(snowflake: string, uri: string, data) {
         this.httpClient.post(baseUrl + uri, data).pipe(map(item => {
             if (!this.handleServerErrors(item)) {
-                return Utils.object2TableElement(item);
+                return Utils.object2TableElement(item['data']);
             }
             return null;
         })).subscribe(success => {
@@ -267,6 +267,7 @@ export class KeisAPIService {
     getUserRent(snowflake: string, id: string) {
         this.httpClient.get(baseUrl + '/user/activerent/' + id).pipe(map(item => {
             if (!this.handleServerErrors(item)) {
+                console.log(item);
                 return Utils.object2Rent(item['data']);
             }
         })).subscribe(item => {
@@ -330,7 +331,9 @@ export class KeisAPIService {
         this.putData(snowflake, '/timeLog', data.createObject());
     }
 
-
+    getLogStats(snowflake: string, data: TableElement) {
+        this.postData(snowflake, '/timeLog/get', data.createObject());
+    }
 }
 
 

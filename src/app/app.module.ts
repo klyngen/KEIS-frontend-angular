@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import '@angular/cdk/overlay';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -35,6 +35,9 @@ import { RentStatsComponent } from './rent/rent-stats/rent-stats.component';
 import { TimelogComponent } from './timelog/timelog.component';
 import { StatsComponent } from './timelog/stats/stats.component';
 import { EndTimeDirective } from './timelog/end-time.directive';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { TimelogStatsComponent } from './timelog-stats/timelog-stats.component';
+
 
 @NgModule({
   declarations: [
@@ -62,7 +65,8 @@ import { EndTimeDirective } from './timelog/end-time.directive';
       RentStatsComponent,
       TimelogComponent,
       StatsComponent,
-      EndTimeDirective
+      EndTimeDirective,
+      TimelogStatsComponent
   ],
   imports: [
       BrowserModule,
@@ -70,6 +74,8 @@ import { EndTimeDirective } from './timelog/end-time.directive';
       AppRoutingModule,
       AngularFontAwesomeModule,
       HttpClientModule,
+      OwlDateTimeModule,
+      OwlNativeDateTimeModule,
       DataTablesModule,
       NgxChartsModule,
       BrowserAnimationsModule,
