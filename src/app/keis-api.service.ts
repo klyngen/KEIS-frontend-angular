@@ -9,7 +9,7 @@ import { JsonElement } from './httpClient/json-element';
 import { Utils } from './httpClient/utils';
 import { TableElement } from './httpClient/table-element';
 
-const baseUrl = 'http://localhost:8000/api';
+const baseUrl = 'http://localhost/backend/api';
 
 const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
