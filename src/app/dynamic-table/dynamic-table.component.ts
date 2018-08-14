@@ -20,7 +20,8 @@ export class DynamicTableComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(DataTableDirective) dtElement: DataTableDirective;
 
     dtTrigger: Subject<any> = new Subject();
-    dtOptions: DataTables.Settings = {};
+    dtOptions: any = {};
+    
 
     ngAfterViewInit(): void {
         this.dtOptions.data = this.dta;
@@ -66,6 +67,14 @@ export class DynamicTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
       this.dtOptions = {
+          dom: 'Bfrtip',
+          buttons: [
+              'columnsToggle',
+              'colvis',
+              'copy',
+              'print',
+              'excel',
+          ],
           rowCallback: (row: Node, data: any[] | Object, index: number) => {
               $('td', row).unbind('click');
               $('td', row).bind('click', () => {
@@ -77,7 +86,7 @@ export class DynamicTableComponent implements OnInit, AfterViewInit, OnDestroy {
                       }
                   });
               });
-          }
+          },
       };
       this._init = true;
   }

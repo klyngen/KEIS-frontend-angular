@@ -4,6 +4,8 @@ import { TableElement } from '../httpClient/table-element';
 import { KeisAPIService } from '../keis-api.service';
 import { Utils } from '../httpClient/utils';
 import { TimeLog } from '../httpClient/time-log';
+import * as XLSX from 'xlsx';
+//import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'timelog-stats',
@@ -12,27 +14,50 @@ import { TimeLog } from '../httpClient/time-log';
 })
 export class TimelogStatsComponent implements OnInit {
 
+    _processed = [];
+    _chartData = [];
+   
     constructor(private httpClient: KeisAPIService) {
         this.fetchFlake = httpClient.snowflake();
         this.httpClient.getObserver().subscribe(item => {
+            // A hell of a function
             if (item.correlationId === this.fetchFlake) {
+                console.log(item.data[0].getValue('data'));
                 const data = [];
 
-                item.data.forEach(sitem => {
-                    const snumber = sitem.getValue('studentNumber');
+                item.data[0].getValue('data').forEach(sitem => {
+                    data.push(new TimeLog(sitem.value));
+                });
+                console.log(data);
 
-                    data.forEach(ssitem => {
-                        const ssnumber = ssitem.getValue('studentNumber');
-                        if (snumber === ssnumber) {
-                            const hour = sitem.getValue('hours');
+                const processed = [];
+                const done = [];
+                data.forEach(sitem => {
+                    const snumber = sitem.getValue('studentNumber');
+                    sitem.setValuePair('times', 1);
+
+                    let alreadyProcessed = false;
+
+                    done.forEach(finished => {
+                        if (finished === snumber) {
+                            alreadyProcessed = true;
                         }
                     });
+                    if (!alreadyProcessed) {
+                        data.forEach(ssitem => {
+                            const ssnumber = ssitem.getValue('studentNumber');
+                            if (snumber === ssnumber) {
+                                sitem.setValue('hours', sitem.getValue('hours') +
+                                               ssitem.getValue('hours'));
+                                sitem.setValue('times', sitem.getValue('times') +1 );
+                            }
+                        });
+                        done.push(snumber);
+                        processed.push(sitem);
+                    }
                 });
-
-                //item.data.forEach(sitem => {
-                    //data.push(new TimeLog(sitem.data));
-                //});
-                //this._tableData.next(data);
+                this._tableData.next(processed);
+                this._processed = processed;
             }
         });
     }

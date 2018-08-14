@@ -103,7 +103,7 @@ export class KeisAPIService {
     private postData(snowflake: string, uri: string, data) {
         this.httpClient.post(baseUrl + uri, data).pipe(map(item => {
             if (!this.handleServerErrors(item)) {
-                return Utils.object2TableElement(item['data']);
+                return Utils.object2TableElement(item);
             }
             return null;
         })).subscribe(success => {
