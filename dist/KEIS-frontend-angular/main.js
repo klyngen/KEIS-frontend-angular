@@ -2180,7 +2180,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var baseUrl = 'http://localhost/backend/api';
+var baseUrl = 'http://localhost/backend/index.php/api';
 var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]().set('Content-Type', 'application/json');
 var KeisAPIService = /** @class */ (function () {
     function KeisAPIService(httpClient, alertService) {
